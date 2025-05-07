@@ -1,0 +1,130 @@
+<div class="container mt-4">
+  <div class="row mb-4">
+    <div class="col">
+      <h1>Edit Student</h1>
+      <p class="text-muted">Update student information for <%= student.User.firstName %> <%= student.User.lastName %></p>
+    </div>
+    <div class="col-auto">
+      <a href="/admin/students" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left mr-1"></i> Back to Students
+      </a>
+    </div>
+  </div>
+  
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <form action="/admin/students/<%= student.id %>/update" method="POST">
+        <div class="row">
+          <div class="col-12">
+            <h5 class="mb-3">User Account Information</h5>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" class="form-control" id="firstName" name="firstName" value="<%= studentUser.firstName %>" required>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" class="form-control" id="lastName" name="lastName" value="<%= studentUser.lastName %>" required>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" class="form-control" id="email" name="email" value="<%= studentUser.email %>" required>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Leave blank to keep current password">
+              <small class="form-text text-muted">Only fill this if you want to change the password</small>
+            </div>
+          </div>
+        </div>
+        
+        <hr class="my-4">
+        
+        <div class="row">
+          <div class="col-12">
+            <h5 class="mb-3">Student Information</h5>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="studentIdNumber">Student ID Number</label>
+              <input type="text" class="form-control" id="studentIdNumber" name="studentIdNumber" value="<%= student.studentId %>" required>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="grade">Grade/Year</label>
+              <input type="text" class="form-control" id="grade" name="grade" value="<%= student.grade || '' %>">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="section">Section</label>
+              <input type="text" class="form-control" id="section" name="section" value="<%= student.section || '' %>">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="status">Status</label>
+              <select class="form-control" id="status" name="status">
+                <option value="active" <%= student.status === 'active' ? 'selected' : '' %>>Active</option>
+                <option value="graduated" <%= student.status === 'graduated' ? 'selected' : '' %>>Graduated</option>
+                <option value="suspended" <%= student.status === 'suspended' ? 'selected' : '' %>>Suspended</option>
+                <option value="withdrawn" <%= student.status === 'withdrawn' ? 'selected' : '' %>>Withdrawn</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="dateOfBirth">Date of Birth</label>
+              <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" value="<%= student.dateOfBirth || '' %>">
+            </div>
+          </div>
+        </div>
+        
+        <div class="row mt-3">
+          <div class="col-12">
+            <h5 class="mb-3">Parent/Guardian Information</h5>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="parentName">Parent/Guardian Name</label>
+              <input type="text" class="form-control" id="parentName" name="parentName" value="<%= student.parentName || '' %>">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="parentEmail">Parent/Guardian Email</label>
+              <input type="email" class="form-control" id="parentEmail" name="parentEmail" value="<%= student.parentEmail || '' %>">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="parentPhone">Parent/Guardian Phone</label>
+              <input type="text" class="form-control" id="parentPhone" name="parentPhone" value="<%= student.parentPhone || '' %>">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="address">Address</label>
+              <textarea class="form-control" id="address" name="address" rows="3"><%= student.address || '' %></textarea>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-4">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save mr-1"></i> Save Changes
+          </button>
+          <a href="/admin/students" class="btn btn-outline-secondary ml-2">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
