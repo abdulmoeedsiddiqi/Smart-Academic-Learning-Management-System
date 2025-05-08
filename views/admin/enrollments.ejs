@@ -1,0 +1,207 @@
+<%- include('../partials/navbar') %>
+
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-800 mb-2">Enrollment Management</h1>
+      <p class="text-gray-600">View and manage student enrollments</p>
+    </div>
+  </div>
+
+  <div class="bg-white shadow-md rounded-lg overflow-hidden mb-8">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Teacher</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Enrollment Date</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% if (enrollments && enrollments.length > 0) { %>
+            <% enrollments.forEach(enrollment => { %>
+              <tr id="enrollment-<%= enrollment.id %>" class="hover:bg-gray-50">
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="font-medium text-gray-900">
+                    <% if (enrollment.Student && enrollment.Student.User) { %>
+                      <%= enrollment.Student.User.firstName %> <%= enrollment.Student.User.lastName %>
+                    <% } else { %>
+                      <span class="text-gray-500">Unknown student</span>
+                    <% } %>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">
+                    <% if (enrollment.Course) { %>
+                      <%= enrollment.Course.name %>
+                    <% } else { %>
+                      <span class="text-gray-500">Unknown course</span>
+                    <% } %>
+                  </div>
+                  <div class="text-xs text-gray-500">
+                    <% if (enrollment.Course) { %>
+                      <%= enrollment.Course.courseCode || 'No code' %>
+                    <% } %>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">
+                    <% if (enrollment.Course && enrollment.Course.instructor && enrollment.Course.instructor.User) { %>
+                      <%= enrollment.Course.instructor.User.firstName %> <%= enrollment.Course.instructor.User.lastName %>
+                    <% } else { %>
+                      <span class="text-gray-500">Not assigned</span>
+                    <% } %>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-500">
+                    <%= new Date(enrollment.enrollmentDate).toLocaleDateString() %>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <% if (enrollment.status === 'active') { %>
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                      Active
+                    </span>
+                  <% } else if (enrollment.status === 'completed') { %>
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                      Completed
+                    </span>
+                  <% } else if (enrollment.status === 'dropped') { %>
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                      Dropped
+                    </span>
+                  <% } else { %>
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                      <%= enrollment.status || 'Unknown' %>
+                    </span>
+                  <% } %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <button 
+                    class="text-red-600 hover:text-red-900 delete-enrollment" 
+                    data-enrollment-id="<%= enrollment.id %>" 
+                    data-student-name="<% if (enrollment.Student && enrollment.Student.User) { %><%= enrollment.Student.User.firstName %> <%= enrollment.Student.User.lastName %><% } else { %>Unknown student<% } %>"
+                    data-course-name="<% if (enrollment.Course) { %><%= enrollment.Course.name %><% } else { %>Unknown course<% } %>"
+                  >
+                    Unenroll
+                  </button>
+                </td>
+              </tr>
+            <% }) %>
+          <% } else { %>
+            <tr>
+              <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">No enrollments found</td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+        <div class="sm:flex sm:items-start">
+          <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+            <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Unenroll Student</h3>
+            <div class="mt-2">
+              <p class="text-sm text-gray-500">
+                Are you sure you want to unenroll <span id="studentToUnenroll"></span> from the course <span id="courseToUnenroll"></span>? This will remove all of the student's assignments, submissions, grades, and attendance records for this course. This action cannot be undone.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+        <button id="confirmDelete" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">Unenroll</button>
+        <button id="cancelDelete" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const deleteModal = document.getElementById('deleteModal');
+    const studentToUnenrollSpan = document.getElementById('studentToUnenroll');
+    const courseToUnenrollSpan = document.getElementById('courseToUnenroll');
+    const confirmDeleteBtn = document.getElementById('confirmDelete');
+    const cancelDeleteBtn = document.getElementById('cancelDelete');
+    let enrollmentIdToDelete = null;
+    
+    // Show delete confirmation modal
+    document.querySelectorAll('.delete-enrollment').forEach(button => {
+      button.addEventListener('click', function() {
+        enrollmentIdToDelete = this.getAttribute('data-enrollment-id');
+        studentToUnenrollSpan.textContent = this.getAttribute('data-student-name');
+        courseToUnenrollSpan.textContent = this.getAttribute('data-course-name');
+        deleteModal.classList.remove('hidden');
+      });
+    });
+    
+    // Hide modal on cancel
+    cancelDeleteBtn.addEventListener('click', function() {
+      deleteModal.classList.add('hidden');
+    });
+    
+    // Handle delete confirmation
+    confirmDeleteBtn.addEventListener('click', async function() {
+      try {
+        // Show loading state
+        confirmDeleteBtn.disabled = true;
+        confirmDeleteBtn.textContent = 'Processing...';
+        
+        const response = await fetch(`/admin/api/enrollments/${enrollmentIdToDelete}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+          // Remove the row from the table
+          const enrollmentRow = document.getElementById(`enrollment-${enrollmentIdToDelete}`);
+          if (enrollmentRow) {
+            enrollmentRow.remove();
+          }
+          
+          // Check if table is empty now
+          const tableBody = document.querySelector('tbody');
+          if (tableBody.children.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">No enrollments found</td></tr>';
+          }
+          
+          // Show success message (optional)
+          alert('Student successfully unenrolled from course');
+        } else {
+          alert(`Error: ${result.message || 'Failed to unenroll student'}`);
+        }
+      } catch (error) {
+        console.error('Error unenrolling student:', error);
+        alert('An error occurred while unenrolling the student');
+      } finally {
+        // Hide modal and reset button
+        deleteModal.classList.add('hidden');
+        confirmDeleteBtn.disabled = false;
+        confirmDeleteBtn.textContent = 'Unenroll';
+      }
+    });
+  });
+</script>
