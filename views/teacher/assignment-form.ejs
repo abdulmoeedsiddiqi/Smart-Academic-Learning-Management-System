@@ -1,0 +1,180 @@
+<%- include('../partials/navbar') %>
+
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-3xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">
+            <%= assignment ? 'Edit Assignment' : 'Create New Assignment' %>
+        </h1>
+        
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <!-- Updated form action to use our new protected route -->
+            <form action="/teacher/assignments/submit" 
+                  method="POST" 
+                  class="p-6"
+                  enctype="multipart/form-data">
+                <input type="hidden" name="_method" value="<%= assignment ? 'PUT' : 'POST' %>">
+                
+                <!-- Hidden fields for assignment ID if editing -->
+                <% if (assignment) { %>
+                  <input type="hidden" name="assignmentId" value="<%= assignment.id %>">
+                <% } %>
+                
+                <div class="mb-6">
+                    <label for="courseId" class="block text-gray-700 text-sm font-bold mb-2">Course*</label>
+                    <select 
+                        id="courseId" 
+                        name="courseId" 
+                        class="form-select shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        required
+                    >
+                        <option value="">Select Course</option>
+                        <% if (typeof courses !== 'undefined' && courses) { %>
+                            <% courses.forEach(course => { %>
+                                <option value="<%= course.id %>" <%= (assignment && assignment.courseId === course.id) || (typeof courseId !== 'undefined' && courseId === course.id) ? 'selected' : '' %>>
+                                    <%= course.name %> (<%= course.courseCode %>)
+                                </option>
+                            <% }); %>
+                        <% } %>
+                    </select>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Assignment Title*</label>
+                        <input 
+                            type="text" 
+                            id="title" 
+                            name="title" 
+                            value="<%= assignment ? assignment.title : '' %>"
+                            required 
+                            class="form-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            placeholder="e.g. Midterm Essay"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label for="assignmentNumber" class="block text-gray-700 text-sm font-bold mb-2">Assignment Number</label>
+                        <input 
+                            type="number" 
+                            id="assignmentNumber" 
+                            name="assignmentNumber" 
+                            value="<%= assignment ? assignment.assignmentNumber : '' %>"
+                            min="1"
+                            class="form-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            placeholder="e.g. 1"
+                        >
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description*</label>
+                    <textarea 
+                        id="description" 
+                        name="description" 
+                        rows="4"
+                        class="form-textarea shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        placeholder="Enter assignment description, requirements, and guidelines..."
+                        required
+                    ><%= assignment ? assignment.description : '' %></textarea>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="dueDate" class="block text-gray-700 text-sm font-bold mb-2">Due Date*</label>
+                        <input 
+                            type="datetime-local" 
+                            id="dueDate" 
+                            name="dueDate" 
+                            value="<%= assignment && assignment.dueDate ? new Date(assignment.dueDate).toISOString().slice(0, 16) : '' %>"
+                            required
+                            class="form-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label for="totalMarks" class="block text-gray-700 text-sm font-bold mb-2">Total Marks*</label>
+                        <input 
+                            type="number" 
+                            id="totalMarks" 
+                            name="totalMarks" 
+                            value="<%= assignment ? assignment.totalMarks : '100' %>"
+                            min="1" 
+                            required
+                            class="form-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        >
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="assignmentType" class="block text-gray-700 text-sm font-bold mb-2">Assignment Type</label>
+                        <select 
+                            id="assignmentType" 
+                            name="assignmentType" 
+                            class="form-select shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        >
+                            <option value="homework" <%= assignment && assignment.assignmentType === 'homework' ? 'selected' : '' %>>Homework</option>
+                            <option value="quiz" <%= assignment && assignment.assignmentType === 'quiz' ? 'selected' : '' %>>Quiz</option>
+                            <option value="project" <%= assignment && assignment.assignmentType === 'project' ? 'selected' : '' %>>Project</option>
+                            <option value="exam" <%= assignment && assignment.assignmentType === 'exam' ? 'selected' : '' %>>Exam</option>
+                            <option value="other" <%= assignment && assignment.assignmentType === 'other' ? 'selected' : '' %>>Other</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="weightage" class="block text-gray-700 text-sm font-bold mb-2">Weightage (%)</label>
+                        <input 
+                            type="number" 
+                            id="weightage" 
+                            name="weightage" 
+                            value="<%= assignment ? assignment.weightage : '10' %>"
+                            min="0" 
+                            max="100" 
+                            class="form-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        >
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label for="file" class="block text-gray-700 text-sm font-bold mb-2">Assignment PDF File</label>
+                    <div class="flex items-center">
+                        <input 
+                            type="file" 
+                            id="file" 
+                            name="file" 
+                            accept="application/pdf" 
+                            class="form-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        >
+                    </div>
+                    <% if (assignment && assignment.filePath) { %>
+                        <div class="mt-2 text-sm text-gray-600">
+                            <p>Current file: <a href="<%= assignment.filePath %>" target="_blank" class="text-blue-600 hover:text-blue-800"><%= assignment.fileOriginalName %></a></p>
+                        </div>
+                    <% } %>
+                    <p class="text-xs text-gray-500 mt-1">Upload assignment PDF file (Max: 10MB).</p>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="flex items-center">
+                        <input 
+                            type="checkbox" 
+                            name="isActive" 
+                            <%= assignment && assignment.isActive ? 'checked' : '' %>
+                            class="form-checkbox h-5 w-5 text-blue-600"
+                        >
+                        <span class="ml-2 text-gray-700">Make assignment visible to students</span>
+                    </label>
+                </div>
+                
+                <div class="flex items-center justify-end">
+                    <a href="/teacher/dashboard" class="text-gray-600 hover:text-gray-800 mr-4">Cancel</a>
+                    <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        <%= assignment ? 'Update Assignment' : 'Create Assignment' %>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>
