@@ -1,0 +1,80 @@
+<%- include('../partials/navbar') %>
+
+<div class="container mx-auto px-4 py-8">
+  <!-- Course Header -->
+  <div class="mb-8 p-6 bg-white rounded-lg shadow-md border-l-4 border-indigo-500">
+    <div class="flex justify-between items-start mb-4">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800"><%= course.name %></h1>
+        <p class="text-lg text-indigo-600 font-mono"><%= course.courseCode %></p>
+      </div>
+      <% if (enrollment) { %>
+        <span class="px-3 py-1 text-sm rounded-full <%= enrollment.status === 'active' ? 'bg-green-100 text-green-800' : (enrollment.status === 'completed' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800') %>">
+          <%= enrollment.status.charAt(0).toUpperCase() + enrollment.status.slice(1) %>
+        </span>
+      <% } %>
+    </div>
+
+    <% if (course.instructor && course.instructor.User) { %>
+      <div class="flex items-center mb-3 text-gray-700">
+        <svg class="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+        </svg>
+        <span class="text-sm">
+          Instructor: <%= course.instructor.User.firstName %> <%= course.instructor.User.lastName %>
+        </span>
+      </div>
+    <% } %>
+
+    <% if (course.department) { %>
+      <p class="text-sm text-gray-600 mb-2">Department: <%= course.department %></p>
+    <% } %>
+    <% if (course.credits) { %>
+      <p class="text-sm text-gray-600 mb-4">Credits: <%= course.credits %></p>
+    <% } %>
+
+    <% if (course.description) { %>
+      <p class="text-gray-700"><%= course.description %></p>
+    <% } else { %>
+      <p class="text-gray-500 italic">No description available.</p>
+    <% } %>
+
+    <% if (course.prerequisites && course.prerequisites.length > 0) { %>
+      <div class="mt-4">
+        <p class="text-sm text-gray-500 mb-1">Prerequisites:</p>
+        <div class="flex flex-wrap gap-1">
+          <% course.prerequisites.forEach(prereq => { %>
+            <span class="px-2 py-1 text-xs rounded bg-gray-100 text-gray-800"><%= prereq %></span>
+          <% }); %>
+        </div>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Course Content Sections (Assignments, Grades, Attendance - TODO) -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Assignments Section -->
+    <div class="md:col-span-2 bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Assignments</h2>
+      <p class="text-gray-600">Assignments for this course will appear here.</p>
+      <!-- TODO: Loop through assignments specific to this course -->
+    </div>
+
+    <!-- Grades Section -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">My Grades</h2>
+      <p class="text-gray-600">Your grades for this course will appear here.</p>
+      <!-- TODO: Display relevant grades -->
+    </div>
+
+    <!-- Attendance Section -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">My Attendance</h2>
+      <p class="text-gray-600">Your attendance record for this course will appear here.</p>
+      <!-- TODO: Display attendance summary -->
+    </div>
+  </div>
+
+</div>
+
+<%- include('../partials/footer') %>
