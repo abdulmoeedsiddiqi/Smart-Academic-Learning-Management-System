@@ -1,0 +1,306 @@
+<%- include('../partials/navbar') %>
+
+<div class="container mx-auto px-4 py-8">
+  <!-- Page Header -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">Available Courses</h1>
+    <p class="text-gray-600">Browse and enroll in available courses for the current semester.</p>
+  </div>
+
+  <!-- Search and Filter Bar -->
+  <div class="bg-white rounded-lg shadow-md p-4 mb-8">
+    <form id="courseFilterForm" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div>
+        <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+        <input 
+          type="text" 
+          id="search" 
+          name="search" 
+          placeholder="Search by name or course code"
+          class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        >
+      </div>
+      <div>
+        <label for="department" class="block text-sm font-medium text-gray-700 mb-1">Department</label>
+        <select 
+          id="department" 
+          name="department"
+          class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        >
+          <option value="">All Departments</option>
+          <% departments.forEach(dept => { %>
+            <option value="<%= dept %>"><%= dept %></option>
+          <% }); %>
+        </select>
+      </div>
+      <div>
+        <label for="credits" class="block text-sm font-medium text-gray-700 mb-1">Credits</label>
+        <select 
+          id="credits" 
+          name="credits"
+          class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        >
+          <option value="">All Credits</option>
+          <option value="1">1 Credit</option>
+          <option value="2">2 Credits</option>
+          <option value="3">3 Credits</option>
+          <option value="4">4 Credits</option>
+          <option value="5">5+ Credits</option>
+        </select>
+      </div>
+      <div class="flex items-end">
+        <button 
+          type="submit"
+          class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Apply Filters
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Available Courses Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% if (courses && courses.length > 0) { %>
+      <% courses.forEach(course => { %>
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+          <!-- Course Header -->
+          <div class="p-4 bg-gray-50 border-b border-gray-200">
+            <div class="flex justify-between items-start">
+              <div>
+                <h3 class="font-bold text-xl text-gray-900"><%= course.name %></h3>
+                <p class="text-sm text-indigo-600 font-mono"><%= course.courseCode %></p>
+              </div>
+              <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                <%= course.credits %> Credits
+              </span>
+            </div>
+          </div>
+          
+          <!-- Course Body -->
+          <div class="p-4">
+            <% if (course.instructor && course.instructor.User) { %>
+              <div class="flex items-center mb-3">
+                <div class="flex-shrink-0 h-8 w-8 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-800 font-semibold">
+                  <%= course.instructor.User.firstName.charAt(0) + course.instructor.User.lastName.charAt(0) %>
+                </div>
+                <p class="ml-2 text-sm text-gray-700">
+                  <span class="text-gray-500">Instructor:</span> 
+                  <%= course.instructor.User.firstName %> <%= course.instructor.User.lastName %>
+                </p>
+              </div>
+            <% } %>
+
+            <% if (course.department) { %>
+              <div class="flex items-center mb-3">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                </svg>
+                <p class="ml-2 text-sm text-gray-700">
+                  <span class="text-gray-500">Department:</span> 
+                  <%= course.department %>
+                </p>
+              </div>
+            <% } %>
+
+            <% if (course.semester) { %>
+              <div class="flex items-center mb-3">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <p class="ml-2 text-sm text-gray-700">
+                  <span class="text-gray-500">Semester:</span> 
+                  <%= course.semester %>
+                </p>
+              </div>
+            <% } %>
+
+            <p class="text-sm text-gray-600 mb-4 line-clamp-3">
+              <%= course.description || 'No description available.' %>
+            </p>
+            
+            <% if (course.prerequisites && course.prerequisites.length > 0) { %>
+              <div class="mb-4">
+                <p class="text-xs text-gray-500 mb-1">Prerequisites:</p>
+                <div class="flex flex-wrap gap-1">
+                  <% course.prerequisites.forEach(prereq => { %>
+                    <span class="px-2 py-1 text-xs rounded bg-gray-100 text-gray-800"><%= prereq %></span>
+                  <% }); %>
+                </div>
+              </div>
+            <% } %>
+            
+            <div class="mt-4 flex items-center justify-between">
+              <div>
+                <% if (course.startDate && course.endDate) { %>
+                  <p class="text-xs text-gray-500">
+                    <%= new Date(course.startDate).toLocaleDateString() %> - <%= new Date(course.endDate).toLocaleDateString() %>
+                  </p>
+                <% } %>
+                <% if (typeof course.capacity === 'number' && typeof course.enrolledCount === 'number') { %>
+                  <p class="text-xs text-gray-500">
+                    <%= course.enrolledCount %> / <%= course.capacity %> enrolled
+                  </p>
+                <% } %>
+              </div>
+
+              <% if (enrolledCourses.includes(course.id)) { %>
+                <button 
+                  class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm font-medium cursor-not-allowed"
+                  disabled
+                >
+                  Already Enrolled
+                </button>
+              <% } else if (course.capacity && course.enrolledCount >= course.capacity) { %>
+                <button 
+                  class="bg-red-100 text-red-700 px-4 py-2 rounded-md text-sm font-medium cursor-not-allowed"
+                  disabled
+                >
+                  Class Full
+                </button>
+              <% } else { %>
+                <button 
+                  class="enroll-btn bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-150"
+                  data-course-id="<%= course.id %>"
+                >
+                  Enroll
+                </button>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <div class="col-span-full bg-white rounded-xl p-8 text-center shadow-xl">
+        <svg class="w-20 h-20 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+        </svg>
+        <p class="text-gray-600 text-lg">No courses available for enrollment at this time.</p>
+        <p class="text-gray-500 mt-2">Check back later or contact your advisor.</p>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Enrollment Success Modal -->
+  <div id="enrollmentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
+      <div id="enrollSuccess" class="hidden">
+        <div class="mb-4 text-center">
+          <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+            <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-medium text-gray-900 mt-4">Enrollment Successful!</h3>
+          <p class="text-gray-600 mt-2">You have been successfully enrolled in this course.</p>
+        </div>
+        <div class="flex justify-center">
+          <button id="viewDashboardBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-150 mr-2">
+            Go to Dashboard
+          </button>
+          <button id="continueEnrollingBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md text-sm font-medium transition-colors duration-150">
+            Continue Browsing
+          </button>
+        </div>
+      </div>
+      <div id="enrollError" class="hidden">
+        <div class="mb-4 text-center">
+          <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+            <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-medium text-gray-900 mt-4">Enrollment Failed</h3>
+          <p id="errorMessage" class="text-gray-600 mt-2">There was a problem with your enrollment. Please try again.</p>
+        </div>
+        <div class="flex justify-center">
+          <button id="closeErrorBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md text-sm font-medium transition-colors duration-150">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Handle enrollment button clicks
+    document.querySelectorAll('.enroll-btn').forEach(button => {
+      button.addEventListener('click', async function() {
+        const courseId = this.getAttribute('data-course-id');
+        try {
+          const response = await fetch('/api/students/enroll', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ courseId }),
+          });
+          
+          const modal = document.getElementById('enrollmentModal');
+          if (response.ok) {
+            // Show success message
+            document.getElementById('enrollSuccess').classList.remove('hidden');
+            document.getElementById('enrollError').classList.add('hidden');
+            modal.classList.remove('hidden');
+            
+            // Disable the enrollment button
+            this.disabled = true;
+            this.textContent = 'Already Enrolled';
+            this.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+            this.classList.add('bg-gray-300', 'text-gray-700', 'cursor-not-allowed');
+          } else {
+            // Show error message
+            const errorData = await response.json();
+            document.getElementById('enrollSuccess').classList.add('hidden');
+            document.getElementById('enrollError').classList.remove('hidden');
+            document.getElementById('errorMessage').textContent = errorData.message || 'There was a problem with your enrollment.';
+            modal.classList.remove('hidden');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          // Show error message
+          document.getElementById('enrollSuccess').classList.add('hidden');
+          document.getElementById('enrollError').classList.remove('hidden');
+          document.getElementById('errorMessage').textContent = 'Network error. Please try again later.';
+          document.getElementById('enrollmentModal').classList.remove('hidden');
+        }
+      });
+    });
+    
+    // Modal button handlers
+    document.getElementById('viewDashboardBtn').addEventListener('click', function() {
+      window.location.href = '/student/dashboard';
+    });
+    
+    document.getElementById('continueEnrollingBtn').addEventListener('click', function() {
+      document.getElementById('enrollmentModal').classList.add('hidden');
+    });
+    
+    document.getElementById('closeErrorBtn').addEventListener('click', function() {
+      document.getElementById('enrollmentModal').classList.add('hidden');
+    });
+    
+    // Form filter functionality
+    const form = document.getElementById('courseFilterForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const search = document.getElementById('search').value;
+      const department = document.getElementById('department').value;
+      const credits = document.getElementById('credits').value;
+      
+      // Build query string
+      let queryParams = [];
+      if (search) queryParams.push(`search=${encodeURIComponent(search)}`);
+      if (department) queryParams.push(`department=${encodeURIComponent(department)}`);
+      if (credits) queryParams.push(`credits=${encodeURIComponent(credits)}`);
+      
+      // Reload with filters
+      const queryString = queryParams.length ? `?${queryParams.join('&')}` : '';
+      window.location.href = `/student/browse-courses${queryString}`;
+    });
+  });
+</script>
+
+<%- include('../partials/footer') %>
