@@ -122,13 +122,13 @@
                         <a href="/student/assignments/<%= assignment.id %>/submission" class="inline-flex items-center px-6 py-3 bg-yellow-600 text-white font-medium rounded-md hover:bg-yellow-700 transition mr-3">
                             View My Submission
                         </a>
-                        
+                         
                         <% if (assignment.maxAttempts > 1 && assignment.submission.attemptNumber < assignment.maxAttempts) { %>
                             <a href="/student/assignments/<%= assignment.id %>/submit" class="inline-flex items-center px-6 py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition">
                                 Submit New Attempt
                             </a>
                         <% } %>
-                    <% } %>
+                    <% } %>  
                 </div>
             </div>
         </div>
