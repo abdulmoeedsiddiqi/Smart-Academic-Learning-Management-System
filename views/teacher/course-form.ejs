@@ -1,0 +1,318 @@
+<%- include('../partials/navbar') %>
+
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-3xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">
+            <%= course ? 'Edit Course' : 'Create New Course' %>
+        </h1>
+        
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <form id="courseForm" action="<%= course ? `/api/teachers/${teacher.id}/courses/${course.id}` : `/api/teachers/${teacher.id}/courses` %>" method="POST" class="p-6">
+                <input type="hidden" name="_method" value="<%= course ? 'PUT' : 'POST' %>">
+                
+                <div class="mb-6">
+                    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Course Name*</label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        name="name" 
+                        value="<%= course ? course.name : '' %>"
+                        required 
+                        class="form-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        placeholder="e.g. Introduction to Computer Science"
+                    >
+                </div>
+                
+                <div class="mb-6">
+                    <label for="courseCode" class="block text-gray-700 text-sm font-bold mb-2">Course Code*</label>
+                    <input 
+                        type="text" 
+                        id="courseCode" 
+                        name="courseCode" 
+                        value="<%= course ? course.courseCode : '' %>"
+                        required 
+                        class="form-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        placeholder="e.g. CS101"
+                    >
+                </div>
+                
+                <div class="mb-6">
+                    <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description</label>
+                    <textarea 
+                        id="description" 
+                        name="description" 
+                        rows="4"
+                        class="form-textarea shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        placeholder="Enter course description here..."
+                    ><%= course ? course.description : '' %></textarea>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="creditHours" class="block text-gray-700 text-sm font-bold mb-2">Credit Hours*</label>
+                        <input 
+                            type="number" 
+                            id="creditHours" 
+                            name="creditHours" 
+                            value="<%= course ? course.creditHours : '3' %>"
+                            min="1" 
+                            step="0.5"
+                            required
+                            class="form-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label for="capacity" class="block text-gray-700 text-sm font-bold mb-2">Capacity</label>
+                        <input 
+                            type="number" 
+                            id="capacity" 
+                            name="capacity" 
+                            value="<%= course ? course.capacity : '30' %>"
+                            min="1" 
+                            class="form-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        >
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="semester" class="block text-gray-700 text-sm font-bold mb-2">Semester</label>
+                        <input 
+                            type="text" 
+                            id="semester" 
+                            name="semester" 
+                            value="<%= course ? course.semester : 'Fall 2025' %>"
+                            class="form-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            placeholder="e.g. Fall 2025"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label for="department" class="block text-gray-700 text-sm font-bold mb-2">Department</label>
+                        <input 
+                            type="text" 
+                            id="department" 
+                            name="department" 
+                            value="<%= course ? course.department : '' %>"
+                            class="form-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            placeholder="e.g. Computer Science"
+                        >
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="startDate" class="block text-gray-700 text-sm font-bold mb-2">Start Date</label>
+                        <input 
+                            type="date" 
+                            id="startDate" 
+                            name="startDate" 
+                            value="<%= course && course.startDate ? new Date(course.startDate).toISOString().split('T')[0] : '' %>"
+                            class="form-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label for="endDate" class="block text-gray-700 text-sm font-bold mb-2">End Date</label>
+                        <input 
+                            type="date" 
+                            id="endDate" 
+                            name="endDate" 
+                            value="<%= course && course.endDate ? new Date(course.endDate).toISOString().split('T')[0] : '' %>"
+                            class="form-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        >
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label for="prerequisites" class="block text-gray-700 text-sm font-bold mb-2">Prerequisites</label>
+                    <div id="prerequisitesContainer">
+                        <div class="prerequisite-item flex mb-2">
+                            <input 
+                                type="text" 
+                                name="prerequisite" 
+                                placeholder="e.g. CS100"
+                                class="form-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2"
+                            >
+                            <button type="button" class="remove-prerequisite bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" id="addPrerequisite" class="mt-2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-1 px-3 rounded text-sm">
+                        Add Another Prerequisite
+                    </button>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="flex items-center">
+                        <input 
+                            type="checkbox" 
+                            name="isActive" 
+                            <%= course && course.isActive ? 'checked' : '' %>
+                            class="form-checkbox h-5 w-5 text-blue-600"
+                        >
+                        <span class="ml-2 text-gray-700">Active</span>
+                    </label>
+                </div>
+                
+                <div class="flex items-center justify-end">
+                    <a href="/teacher/dashboard" class="text-gray-600 hover:text-gray-800 mr-4">Cancel</a>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        <%= course ? 'Update Course' : 'Create Course' %>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle adding more prerequisites
+        const addPrerequisiteBtn = document.getElementById('addPrerequisite');
+        const prerequisitesContainer = document.getElementById('prerequisitesContainer');
+        
+        addPrerequisiteBtn.addEventListener('click', function() {
+            const newPrerequisite = document.createElement('div');
+            newPrerequisite.className = 'prerequisite-item flex mb-2';
+            newPrerequisite.innerHTML = `
+                <input 
+                    type="text" 
+                    name="prerequisite" 
+                    placeholder="e.g. CS100"
+                    class="form-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2"
+                >
+                <button type="button" class="remove-prerequisite bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                    </svg>
+                </button>
+            `;
+            prerequisitesContainer.appendChild(newPrerequisite);
+            
+            // Add event listener to new remove button
+            const removeBtn = newPrerequisite.querySelector('.remove-prerequisite');
+            removeBtn.addEventListener('click', function() {
+                prerequisitesContainer.removeChild(newPrerequisite);
+            });
+        });
+        
+        // Add event listeners to initial remove buttons
+        document.querySelectorAll('.remove-prerequisite').forEach(button => {
+            button.addEventListener('click', function() {
+                const prerequisiteItem = this.parentElement;
+                prerequisitesContainer.removeChild(prerequisiteItem);
+            });
+        });
+        
+        // Handle form submission
+        const courseForm = document.getElementById('courseForm');
+        courseForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Collect form data
+            const formData = new FormData(courseForm);
+            const courseData = {
+                name: formData.get('name'),
+                courseCode: formData.get('courseCode'),
+                description: formData.get('description'),
+                creditHours: parseFloat(formData.get('creditHours')),
+                semester: formData.get('semester'),
+                department: formData.get('department'),
+                capacity: parseInt(formData.get('capacity')),
+                startDate: formData.get('startDate'),
+                endDate: formData.get('endDate'),
+                isActive: formData.has('isActive'),
+                prerequisites: []
+            };
+            
+            // Collect prerequisites
+            const prerequisiteInputs = document.querySelectorAll('input[name="prerequisite"]');
+            prerequisiteInputs.forEach(input => {
+                if (input.value.trim()) {
+                    courseData.prerequisites.push(input.value.trim());
+                }
+            });
+            
+            // Send data to server
+            const method = formData.get('_method') || 'POST';
+            const url = courseForm.action;
+            
+            fetch(url, {
+                method: method === 'PUT' ? 'PUT' : 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(courseData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Redirect to dashboard on success
+                window.location.href = '/teacher/dashboard';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was a problem submitting the course. Please try again.');
+            });
+        });
+        
+        // Initialize prerequisites if editing an existing course
+        let courseData;
+        try {
+            courseData = <%= course ? JSON.stringify(course) : 'null' %>;
+        } catch (e) {
+            courseData = null;
+            console.error("Error parsing course data:", e);
+        }
+        
+        if (courseData && courseData.prerequisites && Array.isArray(courseData.prerequisites)) {
+            // Remove the default empty prerequisite field
+            prerequisitesContainer.innerHTML = '';
+            
+            // Add existing prerequisites
+            courseData.prerequisites.forEach(prereq => {
+                const prerequisiteDiv = document.createElement('div');
+                prerequisiteDiv.className = 'prerequisite-item flex mb-2';
+                prerequisiteDiv.innerHTML = `
+                    <input 
+                        type="text" 
+                        name="prerequisite" 
+                        value="${prereq}"
+                        class="form-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2"
+                    >
+                    <button type="button" class="remove-prerequisite bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                        </svg>
+                    </button>
+                `;
+                prerequisitesContainer.appendChild(prerequisiteDiv);
+                
+                // Add event listener to remove button
+                const removeBtn = prerequisiteDiv.querySelector('.remove-prerequisite');
+                removeBtn.addEventListener('click', function() {
+                    prerequisitesContainer.removeChild(prerequisiteDiv);
+                });
+            });
+            
+            // If no prerequisites, add an empty field
+            if (courseData.prerequisites.length === 0) {
+                addPrerequisiteBtn.click();
+            }
+        }
+    });
+</script>
+
+<%- include('../partials/footer') %>
