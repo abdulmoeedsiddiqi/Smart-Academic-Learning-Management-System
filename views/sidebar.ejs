@@ -1,0 +1,191 @@
+<!-- Teacher Sidebar Navigation -->
+<div class="bg-gray-100 text-black w-64 min-h-screen flex flex-col border-r border-gray-300"> <!-- Changed bg, text, added border -->
+
+    <!-- User Info -->
+    <div class="p-4">
+        <div class="flex items-center mb-2">
+            <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center mr-3 flex-shrink-0">
+                <i class="fas fa-user text-white text-lg"></i> <!-- Icon on primary bg can remain white -->
+            </div>
+            <div>
+                <h3 class="font-semibold text-black text-sm"><%= user.firstName %> <%= user.lastName %></h3>
+                <span class="text-xs text-gray-600">Teacher</span> <!-- Darker gray for subtitle -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <nav class="flex-grow px-2 py-4 space-y-2">
+        <h4 class="px-2 text-xs uppercase text-gray-500 tracking-wider font-medium">Menu</h4> <!-- Darker gray for menu heading -->
+        <ul class="space-y-1">
+            <li>
+                <a href="/teacher/dashboard" 
+                   class="flex items-center px-2 py-2.5 rounded-md transition-all duration-150 ease-in-out
+                          <%= currentPath === '/teacher/dashboard' ? 'bg-primary text-white font-medium shadow-md' : 'text-gray-700 hover:bg-gray-200 hover:text-black' %>"> <!-- Adjusted hover/active -->
+                    <i class="fas fa-tachometer-alt fa-fw mr-3 ml-1"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="/teacher/courses" 
+                   class="flex items-center px-2 py-2.5 rounded-md transition-all duration-150 ease-in-out
+                          <%= currentPath.startsWith('/teacher/courses') ? 'bg-primary text-white font-medium shadow-md' : 'text-gray-700 hover:bg-gray-200 hover:text-black' %>"> <!-- Adjusted hover/active -->
+                    <i class="fas fa-book fa-fw mr-3 ml-1"></i>
+                    <span>My Courses</span>
+                </a>
+            </li>
+            <li>
+                <a href="/teacher/assignments" 
+                   class="flex items-center px-2 py-2.5 rounded-md transition-all duration-150 ease-in-out
+                          <%= currentPath.startsWith('/teacher/assignments') ? 'bg-primary text-white font-medium shadow-md' : 'text-gray-700 hover:bg-gray-200 hover:text-black' %>"> <!-- Adjusted hover/active -->
+                    <i class="fas fa-tasks fa-fw mr-3 ml-1"></i>
+                    <span>Assignments</span>
+                </a>
+            </li>
+            <!-- Submissions link removed -->
+            <li>
+                <a href="/teacher/grades" 
+                   class="flex items-center px-2 py-2.5 rounded-md transition-all duration-150 ease-in-out
+                          <%= currentPath.startsWith('/teacher/grades') ? 'bg-primary text-white font-medium shadow-md' : 'text-gray-700 hover:bg-gray-200 hover:text-black' %>"> <!-- Adjusted hover/active -->
+                    <i class="fas fa-chart-bar fa-fw mr-3 ml-1"></i>
+                    <span>Grades</span>
+                </a>
+            </li>
+            <li>
+                <a href="/teacher/all-students" 
+                   class="flex items-center px-2 py-2.5 rounded-md transition-all duration-150 ease-in-out
+                          <%= currentPath === '/teacher/all-students' ? 'bg-primary text-white font-medium shadow-md' : 'text-gray-700 hover:bg-gray-200 hover:text-black' %>"> <!-- Adjusted hover/active -->
+                    <i class="fas fa-users fa-fw mr-3 ml-1"></i>
+                    <span>View All Students</span>
+                </a>
+            </li>
+            <li>
+                <a href="/teacher/attendance" 
+                   class="flex items-center px-2 py-2.5 rounded-md transition-all duration-150 ease-in-out
+                          <%= currentPath === '/teacher/attendance' && !currentPath.endsWith('/view') ? 'bg-primary text-white font-medium shadow-md' : 'text-gray-700 hover:bg-gray-200 hover:text-black' %>"> <!-- Adjusted hover/active -->
+                    <i class="fas fa-edit fa-fw mr-3 ml-1"></i>
+                    <span>Record Attendance</span>
+                </a>
+            </li>
+            <li>
+                <a href="/teacher/attendance/view" 
+                   class="flex items-center px-2 py-2.5 rounded-md transition-all duration-150 ease-in-out
+                          <%= currentPath === '/teacher/attendance/view' ? 'bg-primary text-white font-medium shadow-md' : 'text-gray-700 hover:bg-gray-200 hover:text-black' %>"> <!-- Adjusted hover/active -->
+                    <i class="fas fa-list-alt fa-fw mr-3 ml-1"></i>
+                    <span>View Attendance</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Logout Link -->
+    <div class="p-4 mt-auto">
+        <hr class="border-gray-300 mb-4"> <!-- Adjusted hr color -->
+        <a href="/logout" 
+           class="flex items-center px-2 py-2.5 rounded-md text-gray-700 hover:bg-gray-200 hover:text-black transition-all duration-150 ease-in-out"> <!-- Adjusted hover/active -->
+            <i class="fas fa-sign-out-alt fa-fw mr-3 ml-1"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+</div>
+
+<!-- Mobile sidebar toggle -->
+<div class="md:hidden bg-gray-100 p-4 flex justify-between items-center fixed top-0 left-0 right-0 z-20 shadow-lg border-b border-gray-300"> <!-- Changed bg, added border -->
+    <div class="flex items-center">
+        <button id="mobile-menu-button" class="text-gray-700 hover:text-black focus:outline-none"> <!-- Adjusted text colors -->
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+        <span class="ml-3 text-black font-semibold">Teacher Menu</span> <!-- Adjusted text color -->
+    </div>
+    <a href="/logout" class="text-gray-700 hover:text-black"> <!-- Adjusted text colors -->
+        <i class="fas fa-sign-out-alt"></i>
+    </a>
+</div>
+
+<!-- Mobile sidebar menu -->
+<div id="mobile-menu" class="md:hidden hidden bg-gray-100 text-black fixed top-0 left-0 right-0 bottom-0 z-10 p-4 overflow-y-auto pt-20 border-r border-gray-300"> <!-- Changed bg, text, added border -->
+    <!-- User Info for Mobile -->
+    <div class="flex items-center mb-4 pb-4 border-b border-gray-300"> <!-- Adjusted border color -->
+        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center mr-2 flex-shrink-0">
+            <i class="fas fa-user text-white"></i> <!-- Icon on primary bg can remain white -->
+        </div>
+        <div>
+            <h3 class="font-medium text-black text-sm"><%= user.firstName %> <%= user.lastName %></h3>
+            <span class="text-xs text-gray-600">Teacher</span> <!-- Darker gray for subtitle -->
+        </div>
+    </div>
+    
+    <ul class="space-y-1">
+        <li>
+            <a href="/teacher/dashboard" class="flex items-center px-3 py-3 rounded-md hover:bg-gray-200 <%= currentPath === '/teacher/dashboard' ? 'bg-primary text-white font-medium' : 'text-gray-700 hover:text-black' %>"> <!-- Adjusted hover/active -->
+                <i class="fas fa-tachometer-alt fa-fw mr-3"></i> Dashboard
+            </a>
+        </li>
+        <li>
+            <a href="/teacher/courses" class="flex items-center px-3 py-3 rounded-md hover:bg-gray-200 <%= currentPath.startsWith('/teacher/courses') ? 'bg-primary text-white font-medium' : 'text-gray-700 hover:text-black' %>"> <!-- Adjusted hover/active -->
+                <i class="fas fa-book fa-fw mr-3"></i> My Courses
+            </a>
+        </li>
+        <li>
+            <a href="/teacher/assignments" class="flex items-center px-3 py-3 rounded-md hover:bg-gray-200 <%= currentPath.startsWith('/teacher/assignments') ? 'bg-primary text-white font-medium' : 'text-gray-700 hover:text-black' %>"> <!-- Adjusted hover/active -->
+                <i class="fas fa-tasks fa-fw mr-3"></i> Assignments
+            </a>
+        </li>
+        <!-- Submissions link removed for mobile -->
+        <li>
+            <a href="/teacher/grades" class="flex items-center px-3 py-3 rounded-md hover:bg-gray-200 <%= currentPath.startsWith('/teacher/grades') ? 'bg-primary text-white font-medium' : 'text-gray-700 hover:text-black' %>"> <!-- Adjusted hover/active -->
+                <i class="fas fa-chart-bar fa-fw mr-3"></i> Grades
+            </a>
+        </li>
+        <li>
+            <a href="/teacher/all-students" class="flex items-center px-3 py-3 rounded-md hover:bg-gray-200 <%= currentPath === '/teacher/all-students' ? 'bg-primary text-white font-medium' : 'text-gray-700 hover:text-black' %>"> <!-- Adjusted hover/active -->
+                <i class="fas fa-users fa-fw mr-3"></i> View All Students
+            </a>
+        </li>
+        <li>
+            <a href="/teacher/attendance" class="flex items-center px-3 py-3 rounded-md hover:bg-gray-200 <%= currentPath === '/teacher/attendance' && !currentPath.endsWith('/view') ? 'bg-primary text-white font-medium' : 'text-gray-700 hover:text-black' %>"> <!-- Adjusted hover/active -->
+                <i class="fas fa-edit fa-fw mr-3"></i> Record Attendance
+            </a>
+        </li>
+        <li>
+            <a href="/teacher/attendance/view" class="flex items-center px-3 py-3 rounded-md hover:bg-gray-200 <%= currentPath === '/teacher/attendance/view' ? 'bg-primary text-white font-medium' : 'text-gray-700 hover:text-black' %>"> <!-- Adjusted hover/active -->
+                <i class="fas fa-list-alt fa-fw mr-3"></i> View Attendance
+            </a>
+        </li>
+        <li>
+            <a href="/teacher/settings" class="flex items-center px-3 py-3 rounded-md hover:bg-gray-200 <%= currentPath === '/teacher/settings' ? 'bg-primary text-white font-medium' : 'text-gray-700 hover:text-black' %>"> <!-- Adjusted hover/active -->
+                <i class="fas fa-cog fa-fw mr-3"></i> Settings
+            </a>
+        </li>
+    </ul>
+    <div class="mt-auto pt-6 pb-2">
+        <hr class="border-gray-300 mb-4"> <!-- Adjusted hr color -->
+        <a href="/logout" class="flex items-center px-3 py-3 rounded-md text-gray-700 hover:bg-gray-200 hover:text-black"> <!-- Adjusted hover/active -->
+            <i class="fas fa-sign-out-alt fa-fw mr-3"></i> Logout
+        </a>
+    </div>
+</div>
+
+<!-- Mobile menu toggle script -->
+<script>
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            // Optional: Toggle body scroll
+            // document.body.classList.toggle('overflow-hidden'); 
+        });
+
+        // Close mobile menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                // document.body.classList.remove('overflow-hidden');
+            });
+        });
+    }
+</script>

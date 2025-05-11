@@ -1,0 +1,259 @@
+<%/* Modern Toast Messages System */%>
+
+<div id="notifications-container" class="fixed top-24 right-4 z-90 space-y-3 pointer-events-none max-w-xs sm:max-w-sm md:max-w-md"></div>
+
+<% 
+// Toast message types and their configurations
+const messageTypes = {
+  success: {
+    icon: 'fas fa-check-circle',
+    bgClass: 'bg-success/10',
+    iconClass: 'text-success',
+    progressClass: 'bg-success',
+    ringClass: 'ring-success/30'
+  },
+  error: {
+    icon: 'fas fa-exclamation-circle',
+    bgClass: 'bg-danger/10',
+    iconClass: 'text-danger',
+    progressClass: 'bg-danger',
+    ringClass: 'ring-danger/30'
+  },
+  warning: {
+    icon: 'fas fa-exclamation-triangle',
+    bgClass: 'bg-warning/10',
+    iconClass: 'text-warning-dark',
+    progressClass: 'bg-warning',
+    ringClass: 'ring-warning/30'
+  },
+  info: {
+    icon: 'fas fa-info-circle',
+    bgClass: 'bg-info/10',
+    iconClass: 'text-info',
+    progressClass: 'bg-info',
+    ringClass: 'ring-info/30'
+  }
+};
+
+// Function to generate a toast message with consistent styling
+function generateToast(message, type = 'info', delay = 0) {
+  const config = messageTypes[type] || messageTypes.info;
+  const id = `toast-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+%>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(() => {
+        const container = document.getElementById('notifications-container');
+        if (!container) return;
+        
+        const toast = document.createElement('div');
+        toast.id = '<%= id %>';
+        toast.className = 'toast-notification backdrop-blur-sm flex items-start w-full p-4 rounded-xl shadow-lg <%= config.bgClass %> backdrop-blur-sm border border-white/10 ring-1 <%= config.ringClass %> animate-slide-in-right pointer-events-auto transition-all duration-300 relative overflow-hidden';
+        toast.setAttribute('role', 'alert');
+        
+        // Create a progress bar that will decrease over time
+        const progressBar = document.createElement('div');
+        progressBar.className = 'absolute bottom-0 left-0 h-1 <%= config.progressClass %> transition-all duration-300 w-full';
+        
+        // Create the icon
+        const iconWrapper = document.createElement('div');
+        iconWrapper.className = 'flex-shrink-0 p-2 rounded-lg <%= config.bgClass %> bg-opacity-30';
+        const icon = document.createElement('i');
+        icon.className = '<%= config.icon %> <%= config.iconClass %> text-lg';
+        iconWrapper.appendChild(icon);
+        
+        // Create the message
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'ml-3 text-sm font-medium text-gray-800 flex-grow';
+        messageDiv.textContent = '<%= message %>';
+        
+        // Create the close button
+        const closeButton = document.createElement('button');
+        closeButton.className = 'flex-shrink-0 ml-2 text-gray-500 hover:text-gray-700 focus:outline-none';
+        closeButton.setAttribute('aria-label', 'Close');
+        const closeIcon = document.createElement('i');
+        closeIcon.className = 'fas fa-times';
+        closeButton.appendChild(closeIcon);
+        
+        // Assemble the toast
+        toast.appendChild(iconWrapper);
+        toast.appendChild(messageDiv);
+        toast.appendChild(closeButton);
+        toast.appendChild(progressBar);
+        
+        // Add the toast to the container
+        container.appendChild(toast);
+        
+        // Set the timeout to start the progress bar animation and eventual toast removal
+        setTimeout(() => {
+          const duration = 5000; // 5 seconds
+          
+          // Start the progress bar animation
+          progressBar.style.transition = `width ${duration}ms linear`;
+          progressBar.style.width = '0%';
+          
+          // Remove the toast after duration
+          setTimeout(() => {
+            toast.classList.add('animate-fade-out');
+            setTimeout(() => {
+              toast.remove();
+            }, 300);
+          }, duration);
+        }, 100);
+        
+        // Add click event to close button
+        closeButton.addEventListener('click', () => {
+          toast.classList.add('animate-fade-out');
+          setTimeout(() => {
+            toast.remove();
+          }, 300);
+        });
+      }, <%= delay %>);
+    });
+  </script>
+<% } %>
+
+<% 
+// Process success messages
+if (typeof success_msg !== 'undefined' && success_msg.length > 0) {
+  success_msg.forEach((message, index) => {
+    generateToast(message, 'success', index * 200);
+  });
+}
+
+// Process error messages
+if (typeof error_msg !== 'undefined' && error_msg.length > 0) {
+  error_msg.forEach((message, index) => {
+    generateToast(message, 'error', index * 200);
+  });
+}
+
+// Process error (string or array)
+if (typeof error !== 'undefined' && error.length > 0) {
+  if (Array.isArray(error)) {
+    error.forEach((message, index) => {
+      generateToast(message, 'error', index * 200);
+    });
+  } else {
+    generateToast(error, 'error', 0);
+  }
+}
+
+// Process errors array (from validation)
+if (typeof errors !== 'undefined' && errors.length > 0) {
+  errors.forEach((error, index) => {
+    const message = error.msg || error.message || "An error occurred";
+    generateToast(message, 'error', index * 200);
+  });
+}
+%>
+
+<script>
+  // Function to programmatically show a toast message from anywhere in the app
+  function showToast(message, type = 'info') {
+    const container = document.getElementById('notifications-container');
+    if (!container) return;
+    
+    const types = {
+      success: {
+        icon: 'fas fa-check-circle',
+        bgClass: 'bg-success/10',
+        iconClass: 'text-success',
+        progressClass: 'bg-success',
+        ringClass: 'ring-success/30'
+      },
+      error: {
+        icon: 'fas fa-exclamation-circle',
+        bgClass: 'bg-danger/10',
+        iconClass: 'text-danger',
+        progressClass: 'bg-danger',
+        ringClass: 'ring-danger/30'
+      },
+      warning: {
+        icon: 'fas fa-exclamation-triangle',
+        bgClass: 'bg-warning/10',
+        iconClass: 'text-warning-dark',
+        progressClass: 'bg-warning',
+        ringClass: 'ring-warning/30'
+      },
+      info: {
+        icon: 'fas fa-info-circle',
+        bgClass: 'bg-info/10',
+        iconClass: 'text-info',
+        progressClass: 'bg-info',
+        ringClass: 'ring-info/30'
+      }
+    };
+    
+    const config = types[type] || types.info;
+    const id = `toast-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    
+    const toast = document.createElement('div');
+    toast.id = id;
+    toast.className = `toast-notification backdrop-blur-sm flex items-start w-full p-4 rounded-xl shadow-lg ${config.bgClass} backdrop-blur-sm border border-white/10 ring-1 ${config.ringClass} animate-slide-in-right pointer-events-auto transition-all duration-300 relative overflow-hidden`;
+    toast.setAttribute('role', 'alert');
+    
+    // Create a progress bar that will decrease over time
+    const progressBar = document.createElement('div');
+    progressBar.className = `absolute bottom-0 left-0 h-1 ${config.progressClass} transition-all duration-300 w-full`;
+    
+    // Create the icon
+    const iconWrapper = document.createElement('div');
+    iconWrapper.className = `flex-shrink-0 p-2 rounded-lg ${config.bgClass} bg-opacity-30`;
+    const icon = document.createElement('i');
+    icon.className = `${config.icon} ${config.iconClass} text-lg`;
+    iconWrapper.appendChild(icon);
+    
+    // Create the message
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'ml-3 text-sm font-medium text-gray-800 flex-grow';
+    messageDiv.textContent = message;
+    
+    // Create the close button
+    const closeButton = document.createElement('button');
+    closeButton.className = 'flex-shrink-0 ml-2 text-gray-500 hover:text-gray-700 focus:outline-none';
+    closeButton.setAttribute('aria-label', 'Close');
+    const closeIcon = document.createElement('i');
+    closeIcon.className = 'fas fa-times';
+    closeButton.appendChild(closeIcon);
+    
+    // Assemble the toast
+    toast.appendChild(iconWrapper);
+    toast.appendChild(messageDiv);
+    toast.appendChild(closeButton);
+    toast.appendChild(progressBar);
+    
+    // Add the toast to the container
+    container.appendChild(toast);
+    
+    // Set the timeout to start the progress bar animation and eventual toast removal
+    setTimeout(() => {
+      const duration = 5000; // 5 seconds
+      
+      // Start the progress bar animation
+      progressBar.style.transition = `width ${duration}ms linear`;
+      progressBar.style.width = '0%';
+      
+      // Remove the toast after duration
+      setTimeout(() => {
+        toast.classList.add('animate-fade-out');
+        setTimeout(() => {
+          toast.remove();
+        }, 300);
+      }, duration);
+    }, 100);
+    
+    // Add click event to close button
+    closeButton.addEventListener('click', () => {
+      toast.classList.add('animate-fade-out');
+      setTimeout(() => {
+        toast.remove();
+      }, 300);
+    });
+    
+    return id;
+  }
+  
+  // Expose the function globally
+  window.showToast = showToast;
+</script>
