@@ -1,0 +1,106 @@
+<div class="w-full max-w-md">  <div class="text-center mb-8" data-aos="fade-down">
+    <h2 class="text-2xl font-bold text-white">Welcome Back</h2>
+    <p class="text-white mt-1">Sign in to continue to your dashboard</p>
+  </div>
+  
+  <!-- Display any form-specific error messages that might not be in flash -->
+  <% if (typeof error !== 'undefined' && error.length > 0) { %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6 animate-fade-in" role="alert">
+      <div class="flex items-center">
+        <i class="fas fa-exclamation-circle mr-3 text-red-500"></i>
+        <span><%= error %></span>
+      </div>
+    </div>
+  <% } %>
+  
+  <form x-data="formValidation()" @submit.prevent="validate($el) && $el.submit()" action="/login" method="POST" class="space-y-6" data-aos="fade-up" data-aos-delay="100">
+    <div class="form-group">
+      <label for="email" class="auth-label flex items-center mb-2">
+        <i class="fas fa-envelope mr-2 text-gray-500"></i>
+        Email address
+      </label>
+      <div class="relative">
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          class="auth-input pl-10" 
+          :class="{ 'border-red-500 focus:ring-red-500 focus:border-red-500': hasError('email') }"
+          placeholder="name@example.com" 
+          data-error-required="Email is required"
+          data-error-type="Please enter a valid email address"
+          required
+        >
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fas fa-envelope text-gray-300"></i>
+        </div>
+      </div>
+      <p x-show="hasError('email')" x-text="getError('email')" class="mt-1 text-sm text-red-600"></p>
+    </div>
+    
+    <div class="form-group" x-data="{ showPassword: false }">
+      <label for="password" class="auth-label flex items-center mb-2">
+        <i class="fas fa-lock mr-2 text-gray-500"></i>
+        Password
+      </label>
+      <div class="relative">
+        <input 
+          :type="showPassword ? 'text' : 'password'" 
+          id="password" 
+          name="password" 
+          class="auth-input pl-10" 
+          :class="{ 'border-red-500 focus:ring-red-500 focus:border-red-500': hasError('password') }"
+          placeholder="••••••••" 
+          data-error-required="Password is required"
+          required
+        >
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fas fa-lock text-gray-300"></i>
+        </div>
+        <button 
+          type="button" 
+          class="absolute inset-y-0 right-0 pr-3 flex items-center" 
+          @click="showPassword = !showPassword"
+        >
+          <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" class="text-gray-300 hover:text-white transition-colors"></i>
+        </button>
+      </div>
+      <p x-show="hasError('password')" x-text="getError('password')" class="mt-1 text-sm text-red-600"></p>
+    </div>
+    
+    <div class="flex items-center justify-between">
+      <div class="flex items-center">
+        <input 
+          type="checkbox" 
+          id="rememberMe" 
+          name="rememberMe" 
+          class="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary"
+        >        <label for="rememberMe" class="ml-2 block text-sm text-white">
+          Remember me
+        </label>
+      </div>
+      <a href="/forgot-password" class="auth-link text-sm hover:underline">
+        Forgot password?
+      </a>
+    </div>
+    
+    <div>
+      <button type="submit" class="auth-button group">
+        <span class="flex items-center justify-center">
+          <span>Sign In</span>
+          <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+        </span>
+      </button>
+    </div>
+    
+    <div class="auth-divider">
+      <span class="auth-divider-text">or</span>
+    </div>
+    
+    <div class="auth-footer">
+      <p>Don't have an account? 
+        <a href="/register" class="auth-link font-medium hover:underline">Create Account</a>
+      </p>
+    </div>
+  </form>
+</div>

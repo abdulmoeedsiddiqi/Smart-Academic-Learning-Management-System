@@ -1,0 +1,246 @@
+<div class="w-full max-w-md">  <div class="text-center mb-6">
+    <h2 class="text-2xl font-bold text-white">Join Our Community</h2>
+    <p class="text-white">Create your personal account</p>
+  </div>
+  
+  <form 
+    x-data="{
+      formErrors: {},
+      loading: false,
+      successMessage: '',
+      errorMessage: '',
+      role: '',
+      
+      async submitForm(event) {
+        this.loading = true;
+        this.errorMessage = '';
+        this.successMessage = '';
+        
+        if (!this.validate(event.target)) {
+          this.loading = false;
+          return;
+        }
+        
+        const formData = new FormData(event.target);
+        const data = Object.fromEntries(formData.entries());
+        
+        try {
+          const response = await fetch('/api/auth/register', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+          
+          const result = await response.json();
+          
+          if (!response.ok) {
+            throw new Error(result.message || 'Registration failed');
+          }
+          
+          this.successMessage = 'Registration successful! Redirecting to login...';
+          setTimeout(() => {
+            window.location.href = '/login';
+          }, 1500);
+        } catch (error) {
+          this.errorMessage = error.message || 'An error occurred during registration';
+        } finally {
+          this.loading = false;
+        }
+      },
+      
+      validate(form) {
+        // Existing validation logic
+        return true; 
+      },
+      hasError(field) {
+        return this.formErrors[field] ? true : false;
+      },
+      getError(field) {
+        return this.formErrors[field];
+      }
+    }" 
+    @submit.prevent="submitForm($event)" 
+    method="POST" 
+    class="space-y-6">
+    
+    <!-- Alert messages -->
+    <div x-show="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+      <span class="block sm:inline" x-text="errorMessage"></span>
+    </div>
+    
+    <div x-show="successMessage" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+      <span class="block sm:inline" x-text="successMessage"></span>
+    </div>
+    
+    <!-- Name fields -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label for="firstName" class="auth-label">First Name</label>
+        <input 
+          type="text" 
+          id="firstName" 
+          name="firstName" 
+          class="auth-input" 
+          :class="{ 'border-red-500 focus:ring-red-500 focus:border-red-500': hasError('firstName') }"
+          placeholder="John" 
+          data-error-required="First name is required"
+          required
+        >
+        <p x-show="hasError('firstName')" x-text="getError('firstName')" class="mt-1 text-sm text-red-600"></p>
+      </div>
+      <div>
+        <label for="lastName" class="auth-label">Last Name</label>
+        <input 
+          type="text" 
+          id="lastName" 
+          name="lastName" 
+          class="auth-input" 
+          :class="{ 'border-red-500 focus:ring-red-500 focus:border-red-500': hasError('lastName') }"
+          placeholder="Doe" 
+          data-error-required="Last name is required"
+          required
+        >
+        <p x-show="hasError('lastName')" x-text="getError('lastName')" class="mt-1 text-sm text-red-600"></p>
+      </div>
+    </div>
+
+    <!-- Email field -->
+    <div>
+      <label for="email" class="auth-label">Email address</label>
+      <input 
+        type="email" 
+        id="email" 
+        name="email" 
+        class="auth-input" 
+        :class="{ 'border-red-500 focus:ring-red-500 focus:border-red-500': hasError('email') }"
+        placeholder="name@example.com" 
+        data-error-required="Email is required"
+        data-error-type="Please enter a valid email address"
+        required
+      >
+      <p x-show="hasError('email')" x-text="getError('email')" class="mt-1 text-sm text-red-600"></p>
+    </div>
+
+    <!-- Password fields -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label for="password" class="auth-label">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          class="auth-input" 
+          :class="{ 'border-red-500 focus:ring-red-500 focus:border-red-500': hasError('password') }"
+          placeholder="••••••••" 
+          minlength="8"
+          data-error-required="Password is required"
+          data-error-minlength="Password must be at least 8 characters"
+          required
+        >
+        <p x-show="hasError('password')" x-text="getError('password')" class="mt-1 text-sm text-red-600"></p>
+      </div>
+      <div>
+        <label for="confirmPassword" class="auth-label">Confirm Password</label>
+        <input 
+          type="password" 
+          id="confirmPassword" 
+          name="confirmPassword" 
+          class="auth-input" 
+          :class="{ 'border-red-500 focus:ring-red-500 focus:border-red-500': hasError('confirmPassword') }"
+          placeholder="••••••••" 
+          data-error-required="Please confirm your password"
+          required
+        >
+        <p x-show="hasError('confirmPassword')" x-text="getError('confirmPassword')" class="mt-1 text-sm text-red-600"></p>
+      </div>
+    </div>
+
+    <!-- Role selection -->
+    <div>
+      <label for="role" class="auth-label">Register as</label>
+      <select 
+        id="role" 
+        name="role" 
+        class="auth-input" 
+        :class="{ 'border-red-500 focus:ring-red-500 focus:border-red-500': hasError('role') }"
+        data-error-required="Please select a role"
+        x-model="role"
+        required
+      >
+        <option value="" selected disabled>Select your role</option>
+        <option value="student">Student</option>
+        <option value="teacher">Teacher</option>
+      </select>
+      <p x-show="hasError('role')" x-text="getError('role')" class="mt-1 text-sm text-red-600"></p>      <p class="mt-1 text-sm text-black flex items-start">
+        <svg class="h-4 w-4 mr-1 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+        </svg>
+        Administrator accounts are created by system administrators.
+      </p>
+    </div>
+    
+    <!-- Student ID field - only shown when role is student -->
+    <div x-show="role === 'student'" x-transition>
+      <label for="studentId" class="auth-label">Student ID (7 digits)</label>
+      <input 
+        type="text" 
+        id="studentId" 
+        name="studentId" 
+        class="auth-input" 
+        :class="{ 'border-red-500 focus:ring-red-500 focus:border-red-500': hasError('studentId') }"
+        placeholder="2023123" 
+        pattern="[0-9]{7}"
+        maxlength="7"
+        data-error-required="Student ID is required"
+        data-error-pattern="Student ID must be exactly 7 digits"
+        x-bind:required="role === 'student'"
+      >
+      <p x-show="hasError('studentId')" x-text="getError('studentId')" class="mt-1 text-sm text-red-600"></p>
+      <p class="mt-1 text-sm text-black">Enter your unique 7-digit student identification number.</p>
+    </div>
+
+    <!-- Terms and conditions -->
+    <div class="flex items-start">
+      <div class="flex items-center h-5">
+        <input 
+          type="checkbox" 
+          id="terms" 
+          name="terms" 
+          class="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary" 
+          :class="{ 'border-red-500 focus:ring-red-500 focus:border-red-500': hasError('terms') }"
+          data-error-required="You must agree to the terms and conditions"
+          required
+        >
+      </div>
+      <div class="ml-3 text-sm">        <label for="terms" class="font-medium text-black">
+          I agree to the <a href="/terms" target="_blank" class="auth-link">Terms of Service</a> and 
+          <a href="/privacy" target="_blank" class="auth-link">Privacy Policy</a>
+        </label>
+        <p x-show="hasError('terms')" x-text="getError('terms')" class="mt-1 text-sm text-red-600"></p>
+      </div>
+    </div>
+
+    <!-- Submit button -->
+    <div>
+      <button type="submit" class="auth-button" :disabled="loading">
+        <span x-show="!loading">Create Account</span>
+        <span x-show="loading" class="flex items-center justify-center">
+          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Processing...
+        </span>
+      </button>
+    </div>
+
+    <!-- Login link -->
+    <div class="auth-footer">
+      <p>Already have an account? 
+        <a href="/login" class="auth-link">Sign In</a>
+      </p>
+    </div>
+  </form>
+</div>
