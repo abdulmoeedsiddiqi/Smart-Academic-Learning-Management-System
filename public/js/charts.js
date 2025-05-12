@@ -14,6 +14,13 @@ const chartColors = {
   light: '#f3f4f6',
   dark: '#1f2937'
 };
+document.addEventListener('DOMContentLoaded', function() {
+  initAttendanceCharts();
+  initGradeDistributionCharts();
+  initCourseProgressChart();
+  initActivityChart();
+});
+
 
 // Default options for consistent chart styling
 const defaultOptions = {
