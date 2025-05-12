@@ -50,6 +50,9 @@ const getCourseById = async (req, res) => {
     if (!course) {
       return res.status(404).json({ message: 'Course not found' });
     }
+if (!name || !description || typeof creditHours !== 'number') {
+  return res.status(400).json({ message: 'Invalid course data' });
+}
 
     res.json(course);
   } catch (error) {
