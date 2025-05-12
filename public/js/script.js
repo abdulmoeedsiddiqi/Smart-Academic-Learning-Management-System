@@ -88,6 +88,33 @@ document.addEventListener('DOMContentLoaded', function() {
       form.classList.add('was-validated');
     }, false);
   });
+/**
+ * Main JavaScript file for the Learning Management System (SALAMS)
+ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  initializeBootstrapComponents();
+  highlightActiveNavLink();
+  autoDismissAlerts();
+  enableClientFormValidation();
+  confirmDeleteActions();
+  setupCourseSearch();
+  setupFileUploadPreviews();
+  initializeCharts();
+});
+
+// Bootstrap tooltips and popovers
+function initializeBootstrapComponents() {
+  if (typeof bootstrap !== 'undefined') {
+    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
+    document.querySelectorAll('[data-bs-toggle="popover"]').forEach(el => new bootstrap.Popover(el));
+  }
+}
+
+// Highlight current page in navigation
+function highlightActiveNavLink() {
+  const currentPath = window.location.pathname;
+  document.querySelector
 
   // Add confirmation for delete actions
   const deleteButtons = document.querySelectorAll('.btn-delete');
