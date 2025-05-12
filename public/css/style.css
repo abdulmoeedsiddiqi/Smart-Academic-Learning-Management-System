@@ -33,7 +33,36 @@
   .card-header {
     @apply px-6 py-4 border-b border-gray-100;
   }
-  
+  @layer components {
+  .btn-base {
+    @apply font-medium py-2.5 px-5 rounded-lg shadow-sm hover:shadow transition-all duration-300 flex items-center justify-center gap-2;
+  }
+
+  .btn-primary {
+    @apply btn-base bg-primary text-white hover:bg-primary-dark;
+  }
+
+  .btn-secondary {
+    @apply btn-base bg-white border border-gray-300 text-gray-800 hover:bg-gray-50;
+  }
+
+  .btn-danger {
+    @apply btn-base bg-danger text-white hover:bg-danger-dark;
+  }
+
+  .btn-success {
+    @apply btn-base bg-success text-white hover:bg-success-dark;
+  }
+
+  .btn-outline-primary {
+    @apply btn-base bg-transparent border border-primary text-primary hover:bg-primary hover:text-white;
+  }
+
+  .btn-rounded {
+    @apply rounded-full px-6;
+  }
+}
+
   .card-body {
     @apply p-6;
   }
