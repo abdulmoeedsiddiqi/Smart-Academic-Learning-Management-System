@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Authentication Pages Styling with Tailwind */
+@layer components {
+  .auth-body {
+    @apply min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat;
+    background-image: url('/images/giki.png');
+  }
+
+  .auth-container {
+    @apply w-full max-w-md px-4;
+  }  .auth-card {
+    @apply bg-gray-800 bg-opacity-90 rounded-2xl shadow-xl overflow-hidden transition-all border border-gray-700;
+  }
+
+  .auth-header {
+    @apply p-8 text-center border-b border-gray-100 bg-gradient-to-r from-primary to-primary-dark;
+  }
+
+  .auth-logo-container {
+    @apply flex justify-center mb-4;
+  }
+
+  .auth-logo {
+    @apply h-20 w-auto object-contain drop-shadow-lg;
+  }
+  
+  .auth-title {
+    @apply text-3xl font-bold text-white tracking-tight;
+  }
+
+  .auth-subtitle {
+    @apply text-sm text-white/90 mt-2;
+  }
+
+  .auth-body {
+    @apply p-8;
+  }
+
+  .auth-form-group {
+    @apply mb-5;
+  }
+    .auth-label {
+    @apply block text-sm font-medium text-white mb-1.5;
+  }
+  .auth-input {
+    @apply w-full px-4 py-3 rounded-lg border border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-primary focus:border-primary transition-colors shadow-sm placeholder-gray-400;
+  }
+
+  .auth-button {
+    @apply w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3.5 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow;
+  }
+  .auth-link {
+    @apply text-white hover:text-gray-200 font-medium transition-colors;
+  }
+  .auth-divider {
+    @apply flex items-center text-white my-4;
+  }
+
+  .auth-divider::before,
+  .auth-divider::after {
+    @apply flex-grow h-px bg-gray-300;
+    content: '';
+  }
+
+  .auth-divider-text {
+    @apply px-4 text-sm text-white;
+  }
+  .auth-footer {
+    @apply mt-6 text-center text-sm text-white;
+  }
+}
+
+/* Responsive adjustments handled by Tailwind's responsive utilities */

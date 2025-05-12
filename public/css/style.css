@@ -1,0 +1,329 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Styles that extend Tailwind */
+@layer components {
+  /* Button Styles */
+  .btn-primary {
+    @apply bg-primary hover:bg-primary-dark text-white font-medium py-2.5 px-5 rounded-lg shadow-sm hover:shadow transition-all duration-300 flex items-center justify-center gap-2;
+  }
+  
+  .btn-secondary {
+    @apply bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 font-medium py-2.5 px-5 rounded-lg shadow-sm hover:shadow transition-all duration-300 flex items-center justify-center gap-2;
+  }
+  
+  .btn-danger {
+    @apply bg-danger hover:bg-danger-dark text-white font-medium py-2.5 px-5 rounded-lg shadow-sm hover:shadow transition-all duration-300 flex items-center justify-center gap-2;
+  }
+  
+  .btn-success {
+    @apply bg-success hover:bg-success-dark text-white font-medium py-2.5 px-5 rounded-lg shadow-sm hover:shadow transition-all duration-300 flex items-center justify-center gap-2;
+  }
+  
+  .btn-outline-primary {
+    @apply bg-transparent border border-primary text-primary hover:bg-primary hover:text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-300 flex items-center justify-center gap-2;
+  }
+  
+  /* Card Styles */
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-100 transition-all hover:shadow-md hover:-translate-y-1 overflow-hidden;
+  }
+  
+  .card-header {
+    @apply px-6 py-4 border-b border-gray-100;
+  }
+  
+  .card-body {
+    @apply p-6;
+  }
+  
+  .card-footer {
+    @apply px-6 py-4 border-t border-gray-100 bg-gray-50;
+  }
+  
+  /* Dashboard Widgets */
+  .dashboard-widget {
+    @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6;
+  }
+    /* Form Styles */
+  .form-group {
+    @apply mb-6;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 mb-1.5 flex items-center gap-2;
+  }
+  
+  .form-input {
+    @apply w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all duration-200 px-4 py-2.5;
+  }
+
+  .form-input-icon {
+    @apply relative;
+  }
+
+  .form-input-icon input {
+    @apply pl-10;
+  }
+
+  .form-input-icon .icon {
+    @apply absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400;
+  }
+  
+  .form-select {
+    @apply w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all duration-200;
+  }
+  
+  .form-checkbox {
+    @apply rounded border-gray-300 text-primary focus:ring-primary/20;
+  }
+
+  .form-radio {
+    @apply border-gray-300 text-primary focus:ring-primary/20;
+  }
+
+  .form-textarea {
+    @apply w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all duration-200;
+  }
+
+  .form-help {
+    @apply mt-1 text-xs text-gray-500;
+  }
+  
+  .form-error {
+    @apply mt-1 text-xs text-danger font-medium;
+  }
+
+  /* Form States */
+  .form-input.input-success {
+    @apply border-success focus:border-success focus:ring-success/20;
+  }
+
+  .form-input.input-error {
+    @apply border-danger focus:border-danger focus:ring-danger/20;
+  }
+
+  .form-floating {
+    @apply relative;
+  }
+
+  .form-floating label {
+    @apply absolute text-sm text-gray-500 transform transition-all duration-200 left-3 -translate-y-3 scale-75 top-1 px-1 bg-white z-10 origin-[0];
+  }
+
+  .form-floating input, .form-floating select {
+    @apply pt-5 pb-2 h-14;
+  }
+
+  /* File upload */
+  .form-file-input {
+    @apply block w-full text-gray-700 bg-white rounded-lg border border-gray-300 cursor-pointer focus:outline-none;
+  }
+
+  .form-file-button {
+    @apply px-4 py-2 bg-primary text-white rounded-r-lg;
+  }
+  /* Navigation */
+  .nav-link {
+    @apply text-gray-700 hover:text-primary transition-colors;
+  }
+  
+  .nav-link.active {
+    @apply font-semibold text-primary border-b-2 border-primary;
+  }
+    /* Table Styles */
+  .table-responsive {
+    @apply overflow-x-auto rounded-xl shadow-sm border border-gray-100;
+  }
+  
+  .data-table {
+    @apply min-w-full divide-y divide-gray-200;
+  }
+  
+  .data-table th {
+    @apply px-6 py-4 bg-gradient-to-b from-gray-50 to-gray-100 text-left text-xs font-medium text-gray-600 uppercase tracking-wider sticky top-0 z-10;
+  }
+  
+  .data-table td {
+    @apply px-6 py-4 text-sm text-gray-700 border-b border-gray-100 transition-colors;
+  }
+
+  .data-table td.truncate-text {
+    @apply max-w-xs truncate;
+  }
+  
+  .data-table tr {
+    @apply transition-colors hover:bg-primary/5;
+  }
+  
+  .data-table tr:nth-child(odd) {
+    @apply bg-white;
+  }
+  
+  .data-table tr:nth-child(even) {
+    @apply bg-gray-50/50;
+  }
+  
+  .data-table-striped tr:nth-child(odd) {
+    @apply bg-gray-50/50;
+  }
+  
+  .data-table-striped tr:nth-child(even) {
+    @apply bg-white;
+  }
+  
+  .data-table-actions {
+    @apply flex items-center gap-2;
+  }
+  
+  .table-pagination {
+    @apply flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6;
+  }
+  
+  .table-pagination-button {
+    @apply relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50;
+  }
+  
+  .table-pagination-button.active {
+    @apply bg-primary text-white border-primary hover:bg-primary-dark;
+  }
+  
+  .table-pagination-button.disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+  
+  /* Badge Styles */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .badge-primary {
+    @apply bg-primary/10 text-primary;
+  }
+  
+  .badge-success {
+    @apply bg-success/10 text-success-dark;
+  }
+  
+  .badge-warning {
+    @apply bg-warning/10 text-warning-dark;
+  }
+  
+  .badge-danger {
+    @apply bg-danger/10 text-danger-dark;
+  }
+}
+
+/* Responsive image handling */
+.img-fit {
+  @apply object-cover w-full h-full;
+}
+
+.logo-container {
+  @apply h-10 w-auto;
+}
+
+/* Background utilities */
+.bg-pattern {
+  @apply bg-gray-50 bg-opacity-50;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2V34h4v-2h-4zM36 4V0h-2v4h-4v2h4v4h2V4h4V2h-4zM6 34v-4H4v4H0v2h4v4h2v-4h6v-2H6zM6 4V0H4v4H0v2h4v4h2V4h6V2H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Modern animations */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Add / Update Glassmorphism effects */
+.glass-card {
+  @apply bg-white bg-opacity-10 backdrop-filter backdrop-blur-sm border border-white border-opacity-20 rounded-xl;
+}
+
+/* Utility classes for shadows and transitions */
+.hover-lift {
+  @apply transition-all duration-300 hover:translate-y-[-5px] hover:shadow-lg;
+}
+
+/* New hero button and section styles */
+.hero-gradient {
+  @apply bg-gradient-to-r from-indigo-600 to-blue-500;
+}
+
+.hero-button {
+  @apply py-3 px-8 rounded-lg text-lg font-medium shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105;
+}
+
+/* Header styles for better visibility and contrast */
+.section-heading {
+  @apply text-3xl font-bold text-gray-800 mb-2;
+}
+
+.section-subheading {
+  @apply text-xl text-gray-600 mt-2;
+}
+
+/* Add x-cloak for Alpine.js to prevent flash of unstyled content */
+[x-cloak] {
+  display: none !important;
+}
+
+/* Main styling for SALAMS LMS */
+
+/* General styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Admin dashboard specific */
+.admin-stats .card {
+  border-left: 4px solid #007bff;
+}
+
+.progress {
+  height: 10px;
+  margin-top: 5px;
+}
+
+/* Custom button styles */
+.btn-rounded {
+  border-radius: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Footer styling */
+footer {
+  border-top: 1px solid #eee;
+}
+
+footer a {
+  color: #666;
+}
+
+footer a:hover {
+  color: #007bff;
+  text-decoration: none;
+}
