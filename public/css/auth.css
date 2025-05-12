@@ -11,6 +11,54 @@
 
   .auth-container {
     @apply w-full max-w-md px-4;
+  }
+
+  .auth-card {
+    @apply bg-gray-800 bg-opacity-90 rounded-2xl shadow-xl overflow-hidden transition-all border border-gray-700;
+  }
+
+  .auth-header {
+    @apply p-8 text-center border-b border-gray-100 bg-gradient-to-r from-primary to-primary-dark;
+  }
+
+  .auth-logo-container {
+    @apply flex justify-center mb-4;
+  }
+
+  .auth-logo {
+    @apply h-20 w-auto object-contain drop-shadow-lg;
+  }
+
+  .auth-title {
+    @apply text-3xl font-bold text-white tracking-tight;
+  }
+
+  .auth-subtitle {
+    @apply text-sm text-white/90 mt-2;
+  }
+
+  .auth-body {
+    @apply p-8;
+  }
+
+  .auth-form-group {
+    @apply mb-5;
+  }
+
+  .auth
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Authentication Pages Styling with Tailwind */
+@layer components {
+  .auth-body {
+    @apply min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat;
+    background-image: url('/images/giki.png');
+  }
+
+  .auth-container {
+    @apply w-full max-w-md px-4;
   }  .auth-card {
     @apply bg-gray-800 bg-opacity-90 rounded-2xl shadow-xl overflow-hidden transition-all border border-gray-700;
   }
