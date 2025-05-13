@@ -1,0 +1,390 @@
+<!-- Hero Section with Modern Design -->
+<section class="relative bg-gradient-to-br from-primary-dark via-primary to-primary-light overflow-hidden min-h-[85vh] flex items-center">
+  <!-- Decorative background patterns -->
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute inset-0 bg-pattern"></div>
+  </div>
+  
+  <!-- Animated shapes -->
+  <div class="absolute top-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full translate-x-1/2 -translate-y-1/2"></div>
+  <div class="absolute bottom-0 left-0 w-72 h-72 bg-success opacity-10 rounded-full -translate-x-1/3 translate-y-1/3"></div>
+  <div class="absolute top-1/2 left-1/4 w-48 h-48 bg-secondary opacity-10 rounded-full"></div>
+  
+  <div class="container mx-auto px-6 py-12 lg:py-16 relative z-10">
+    <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
+      <div class="lg:w-1/2 text-center lg:text-left" data-aos="fade-right">
+        <span class="inline-block px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full text-white text-sm font-medium mb-6">Welcome to SALAMS</span>
+        <h1 class="text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight mb-6">
+          <span class="block">Smart Academic</span>
+          <span class="block text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-200">Learning Management</span>
+        </h1>
+        <p class="text-lg text-white text-opacity-90 mb-8 max-w-2xl mx-auto lg:mx-0">
+          A comprehensive platform for educational institutions to streamline administration, enhance teaching, and improve learning outcomes.
+        </p>
+        <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
+          <a href="/register" class="btn-primary bg-white text-primary hover:bg-gray-100 py-3.5 px-8 rounded-lg text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            Get Started
+            <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+          <button 
+            onclick="document.getElementById('featureModal').dispatchEvent(new CustomEvent('open-modal', {detail: null}))"
+            class="btn-secondary bg-transparent border-2 border-white text-white hover:bg-white/10 py-3.5 px-8 rounded-lg text-lg font-medium transition-all duration-300"
+          >
+            Learn More
+            <i class="fas fa-info-circle ml-2"></i>
+          </button>
+        </div>
+      </div>
+      <div class="lg:w-1/2" data-aos="fade-left" data-aos-delay="200">
+        <div class="relative">
+          <!-- Decorative elements -->
+          <div class="absolute -top-10 -right-10 w-32 h-32 bg-warning rounded-full opacity-20 animate-pulse"></div>
+          <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-secondary rounded-full opacity-20 animate-pulse animation-delay-500"></div>
+          
+          <!-- Main image with glass morphism effect -->
+          <div class="relative z-10 rounded-2xl shadow-2xl overflow-hidden border border-white/20 backdrop-filter backdrop-blur-sm p-2 bg-white/10">
+            <img 
+              src="/images/giki.png" 
+              alt="LMS Platform" 
+              class="w-full h-auto rounded-xl shadow-inner transform transition-all duration-500 hover:scale-[1.02]"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Stats Section with modern cards -->
+    <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" data-aos="fade-up" data-aos-delay="400">
+      <div class="bg-white/10 backdrop-filter backdrop-blur-sm rounded-xl p-6 text-center border border-white/20 transform transition-all hover:-translate-y-2 duration-300 shadow-lg">
+        <div class="text-4xl font-bold text-white mb-2">99.9%</div>
+        <p class="text-white text-opacity-80">Uptime Reliability</p>
+      </div>
+      <div class="bg-white/10 backdrop-filter backdrop-blur-sm rounded-xl p-6 text-center border border-white/20 transform transition-all hover:-translate-y-2 duration-300 shadow-lg">
+        <div class="text-4xl font-bold text-white mb-2">500+</div>
+        <p class="text-white text-opacity-80">Institutions</p>
+      </div>
+      <div class="bg-white/10 backdrop-filter backdrop-blur-sm rounded-xl p-6 text-center border border-white/20 transform transition-all hover:-translate-y-2 duration-300 shadow-lg">
+        <div class="text-4xl font-bold text-white mb-2">1M+</div>
+        <p class="text-white text-opacity-80">Users</p>
+      </div>
+      <div class="bg-white/10 backdrop-filter backdrop-blur-sm rounded-xl p-6 text-center border border-white/20 transform transition-all hover:-translate-y-2 duration-300 shadow-lg">
+        <div class="text-4xl font-bold text-white mb-2">24/7</div>
+        <p class="text-white text-opacity-80">Support</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section py-5">
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800">Key Features</h2>
+        <p class="text-xl text-gray-600 mt-2">Everything you need for effective teaching and learning</p>
+        <div class="w-24 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-white rounded-lg shadow-md transition-all hover:shadow-lg p-6 transform hover:-translate-y-2 duration-300">
+          <div class="inline-flex items-center justify-center p-3 bg-primary rounded-full text-white mb-4">
+            <i class="fas fa-book-open fa-2x"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-gray-800">Course Management</h3>
+          <p class="text-gray-600">Easily create, organize and manage courses with intuitive tools for educators.</p>
+          <button 
+            onclick="document.getElementById('featureModal').dispatchEvent(new CustomEvent('open-modal', {detail: 'course'}))"
+            class="text-primary hover:text-primary-dark mt-4 inline-flex items-center group"
+          >
+            Learn more
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 group-hover:ml-2 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Feature 2 -->
+        <div class="bg-white rounded-lg shadow-md transition-all hover:shadow-lg p-6 transform hover:-translate-y-2 duration-300">
+          <div class="inline-flex items-center justify-center p-3 bg-primary rounded-full text-white mb-4">
+            <i class="fas fa-tasks fa-2x"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-gray-800">Assignment Management</h3>
+          <p class="text-gray-600">Create, distribute, collect and grade assignments seamlessly.</p>
+          <button 
+            onclick="document.getElementById('featureModal').dispatchEvent(new CustomEvent('open-modal', {detail: 'assignment'}))"
+            class="text-primary hover:text-primary-dark mt-4 inline-flex items-center group"
+          >
+            Learn more
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 group-hover:ml-2 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Feature 3 -->
+        <div class="bg-white rounded-lg shadow-md transition-all hover:shadow-lg p-6 transform hover:-translate-y-2 duration-300">
+          <div class="inline-flex items-center justify-center p-3 bg-primary rounded-full text-white mb-4">
+            <i class="fas fa-chart-line fa-2x"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-gray-800">Grade Tracking</h3>
+          <p class="text-gray-600">Comprehensive tools for recording, analyzing and reporting student performance.</p>
+          <button 
+            onclick="document.getElementById('featureModal').dispatchEvent(new CustomEvent('open-modal', {detail: 'grade'}))"
+            class="text-primary hover:text-primary-dark mt-4 inline-flex items-center group"
+          >
+            Learn more
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 group-hover:ml-2 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Feature 4 -->
+        <div class="bg-white rounded-lg shadow-md transition-all hover:shadow-lg p-6 transform hover:-translate-y-2 duration-300">
+          <div class="inline-flex items-center justify-center p-3 bg-primary rounded-full text-white mb-4">
+            <i class="fas fa-calendar-check fa-2x"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-gray-800">Attendance Management</h3>
+          <p class="text-gray-600">Track student attendance with ease and generate detailed reports.</p>
+          <button 
+            onclick="document.getElementById('featureModal').dispatchEvent(new CustomEvent('open-modal', {detail: 'attendance'}))"
+            class="text-primary hover:text-primary-dark mt-4 inline-flex items-center group"
+          >
+            Learn more
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 group-hover:ml-2 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Feature 5 -->
+        <div class="bg-white rounded-lg shadow-md transition-all hover:shadow-lg p-6 transform hover:-translate-y-2 duration-300">
+          <div class="inline-flex items-center justify-center p-3 bg-primary rounded-full text-white mb-4">
+            <i class="fas fa-users fa-2x"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-gray-800">User Role Management</h3>
+          <p class="text-gray-600">Different access levels for students, teachers and administrators.</p>
+          <button 
+            onclick="document.getElementById('featureModal').dispatchEvent(new CustomEvent('open-modal', {detail: 'roles'}))"
+            class="text-primary hover:text-primary-dark mt-4 inline-flex items-center group"
+          >
+            Learn more
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 group-hover:ml-2 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Feature 6 -->
+        <div class="bg-white rounded-lg shadow-md transition-all hover:shadow-lg p-6 transform hover:-translate-y-2 duration-300">
+          <div class="inline-flex items-center justify-center p-3 bg-primary rounded-full text-white mb-4">
+            <i class="fas fa-file-alt fa-2x"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-gray-800">Comprehensive Reporting</h3>
+          <p class="text-gray-600">Generate insightful reports on student performance and course effectiveness.</p>
+          <button 
+            onclick="document.getElementById('featureModal').dispatchEvent(new CustomEvent('open-modal', {detail: 'reporting'}))"
+            class="text-primary hover:text-primary-dark mt-4 inline-flex items-center group"
+          >
+            Learn more
+            <svg xmlns="http://www.w3.org/svg" class="h-4 w-4 ml-1 group-hover:ml-2 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section bg-primary text-white text-center py-5">
+  <section class="py-16 bg-primary">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold text-white mb-4 animate__animated animate__fadeIn">Ready to transform your educational institution?</h2>
+      <p class="text-xl text-white opacity-90 mb-8">Join thousands of institutions already using SALAMS to enhance teaching and learning.</p>
+      <a href="/register" class="bg-white text-primary hover:bg-gray-100 font-semibold py-3 px-8 rounded-lg transition-colors transform hover:scale-105 inline-block">Sign Up Today</a>
+    </div>
+  </section>
+</section>
+
+<!-- Feature Modal -->
+<div
+  id="featureModal"
+  x-data="{ 
+    open: false,
+    currentFeature: null,
+    
+    getFeatureTitle() {
+      const titles = {
+        'course': 'Course Management',
+        'assignment': 'Assignment Management',
+        'grade': 'Grade Tracking',
+        'attendance': 'Attendance Management',
+        'roles': 'User Role Management',
+        'reporting': 'Comprehensive Reporting'
+      };
+      return titles[this.currentFeature] || 'SALAMS Features';
+    },
+    
+    init() {
+      this.$el.addEventListener('open-modal', (e) => {
+        this.currentFeature = e.detail;
+        this.open = true;
+      });
+    }
+  }"
+  x-show="open"
+  x-cloak
+  class="fixed inset-0 z-50 overflow-y-auto"
+  x-transition:enter="transition ease-out duration-300"
+  x-transition:enter-start="opacity-0"
+  x-transition:enter-end="opacity-100"
+  x-transition:leave="transition ease-in duration-200"
+  x-transition:leave-start="opacity-100"
+  x-transition:leave-end="opacity-0"
+>
+  <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+    <div 
+      class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" 
+      aria-hidden="true"
+      @click="open = false"
+    ></div>
+    
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+    
+    <div 
+      x-show="open" 
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0 transform scale-95"
+      x-transition:enter-end="opacity-100 transform scale-100"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-100 transform scale-100"
+      x-transition:leave-end="opacity-0 transform scale-95"
+      class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full"
+    >
+      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+        <div class="flex items-start justify-between">
+          <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+            <h3 class="text-2xl leading-6 font-bold text-gray-900 mb-2" x-text="getFeatureTitle()"></h3>
+          </div>
+          <button @click="open = false" class="text-gray-400 hover:text-gray-500">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Course Management Content -->
+        <div x-show="currentFeature === 'course'" class="mt-4">
+          <img src="/images/salamslogo.png" alt="Course Management" class="w-full h-48 object-cover object-center rounded-lg mb-4">
+          <p class="text-gray-600 mb-3">SALAMS offers a robust and intuitive course management system that enables educators to:</p>
+          <ul class="list-disc pl-5 space-y-2 text-gray-600">
+            <li>Create and organize courses with custom content</li>
+            <li>Set up course schedules, credit hours, and prerequisites</li>
+            <li>Upload and manage course materials like syllabi, lecture notes, and resources</li>
+            <li>Manage student enrollments and track progress</li>
+            <li>Integrate multimedia learning content</li>
+            <li>Use discussion forums to facilitate student engagement</li>
+            <li>Create announcements and send notifications to enrolled students</li>
+          </ul>
+          <p class="mt-4 text-gray-600">The intuitive interface makes it easy for teachers to manage all aspects of their courses from a central dashboard.</p>
+        </div>
+        
+        <!-- Assignment Management Content -->
+        <div x-show="currentFeature === 'assignment'" class="mt-4">
+          <img src="/images/salamslogo.png" alt="Assignment Management" class="w-full h-48 object-cover object-center rounded-lg mb-4">
+          <p class="text-gray-600 mb-3">The assignment management system in SALAMS provides comprehensive tools for:</p>
+          <ul class="list-disc pl-5 space-y-2 text-gray-600">
+            <li>Creating various types of assignments (essays, quizzes, projects, etc.)</li>
+            <li>Setting due dates with automatic reminders for students</li>
+            <li>Supporting file uploads for assignment submissions</li>
+            <li>Providing a plagiarism detection tool</li>
+            <li>Enabling peer review and feedback</li>
+            <li>Setting up auto-grading for objective assessments</li>
+            <li>Tracking submission status for all students</li>
+            <li>Providing feedback directly on student work</li>
+          </ul>
+          <p class="mt-4 text-gray-600">Both teachers and students benefit from the streamlined workflow, clear deadlines, and organized submission process.</p>
+        </div>
+        
+        <!-- Grade Tracking Content -->
+        <div x-show="currentFeature === 'grade'" class="mt-4">
+          <img src="/images/salamslogo.png" alt="Grade Tracking" class="w-full h-48 object-cover object-center rounded-lg mb-4">
+          <p class="text-gray-600 mb-3">SALAMS features a comprehensive grade tracking system that:</p>
+          <ul class="list-disc pl-5 space-y-2 text-gray-600">
+            <li>Supports various grading scales (letter grades, percentages, points)</li>
+            <li>Calculates weighted grades based on assignment categories</li>
+            <li>Generates grade reports for individual students or entire classes</li>
+            <li>Provides visual analytics of student performance over time</li>
+            <li>Identifies students who may need additional support</li>
+            <li>Allows students to track their own progress</li>
+            <li>Enables export of grade data in multiple formats</li>
+          </ul>
+          <p class="mt-4 text-gray-600">The system makes it easy to maintain accurate grade records and provide timely feedback to students on their academic performance.</p>
+        </div>
+        
+        <!-- Attendance Management Content -->
+        <div x-show="currentFeature === 'attendance'" class="mt-4">
+          <img src="/images/salamslogo.png" alt="Attendance Management" class="w-full h-48 object-cover object-center rounded-lg mb-4">
+          <p class="text-gray-600 mb-3">The attendance management feature in SALAMS allows educators to:</p>
+          <ul class="list-disc pl-5 space-y-2 text-gray-600">
+            <li>Take and record attendance digitally for each class session</li>
+            <li>Mark students as present, absent, late, or excused</li>
+            <li>Generate attendance reports by student, class, or date range</li>
+            <li>Set up automated notifications for excessive absences</li>
+            <li>Allow students to view their own attendance records</li>
+            <li>Calculate attendance percentages for grading purposes</li>
+            <li>Import/export attendance data as needed</li>
+          </ul>
+          <p class="mt-4 text-gray-600">This system eliminates paper-based attendance tracking and provides valuable insights into student participation patterns.</p>
+        </div>
+        
+        <!-- User Role Management Content -->
+        <div x-show="currentFeature === 'roles'" class="mt-4">
+          <img src="/images/salamslogo.png" alt="User Role Management" class="w-full h-48 object-cover object-center rounded-lg mb-4">
+          <p class="text-gray-600 mb-3">SALAMS implements a sophisticated role-based access control system that:</p>
+          <ul class="list-disc pl-5 space-y-2 text-gray-600">
+            <li>Defines distinct roles for administrators, teachers, and students</li>
+            <li>Controls access to features based on user roles</li>
+            <li>Allows customization of permissions within roles</li>
+            <li>Enables delegation of administrative tasks</li>
+            <li>Supports role transitions (e.g., teaching assistant roles)</li>
+            <li>Maintains security through careful permission management</li>
+            <li>Provides audit logs of user actions by role</li>
+          </ul>
+          <p class="mt-4 text-gray-600">This ensures that users have access to the tools they need while maintaining system security and data privacy.</p>
+        </div>
+        
+        <!-- Comprehensive Reporting Content -->
+        <div x-show="currentFeature === 'reporting'" class="mt-4">
+          <img src="/images/salamslogo.png" alt="Comprehensive Reporting" class="w-full h-48 object-cover object-center rounded-lg mb-4">
+          <p class="text-gray-600 mb-3">The reporting capabilities in SALAMS provide valuable insights through:</p>
+          <ul class="list-disc pl-5 space-y-2 text-gray-600">
+            <li>Customizable dashboards for different user roles</li>
+            <li>Performance analytics across courses and programs</li>
+            <li>Comparison reports between classes, semesters, or academic years</li>
+            <li>Identification of learning trends and patterns</li>
+            <li>Early warning systems for at-risk students</li>
+            <li>Institutional effectiveness metrics</li>
+            <li>Exportable reports for accreditation and compliance</li>
+            <li>Visual data representation through charts and graphs</li>
+          </ul>
+          <p class="mt-4 text-gray-600">These powerful reporting tools help educational institutions make data-driven decisions to improve teaching effectiveness and student outcomes.</p>
+        </div>
+      </div>
+      <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+        <button 
+          type="button" 
+          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:ml-3 sm:w-auto sm:text-sm"
+          @click="open = false"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add animate.css for animations -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />

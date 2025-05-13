@@ -1,0 +1,159 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Profile Sidebar -->
+        </div>
+        <div class="col-md-8">
+            <!-- Profile Content -->
+            <div class="container mx-auto px-4 py-8 max-w-4xl">
+                <div class="bg-white rounded-lg shadow-xl overflow-hidden">
+                    <div class="p-6 border-b border-gray-200 bg-gradient-to-r from-blue-500 to-indigo-600">
+                        <div class="flex items-center">
+                            <img class="h-16 w-16 rounded-full object-cover border-2 border-white mr-4" src="/images/default-avatar.png" alt="Profile Picture">
+                            <div>
+                                <h1 class="text-2xl font-bold text-white"><%= user.firstName %> <%= user.lastName %></h1>
+                                <p class="text-sm text-indigo-100 capitalize"><%= user.role %></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <%- include('./partials/messages') %> <!-- Corrected path -->
+
+                        <!-- Action Buttons -->
+                        <!-- <div class="mb-6 pb-4 border-b border-gray-200 flex justify-end space-x-3">
+                            <a href="/profile/edit" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                                <i class="fas fa-pencil-alt mr-2"></i> Edit Profile
+                            </a>
+                            <a href="/change-password" class="inline-flex items-center px-4 py-2 bg-gray-200 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-150 ease-in-out">
+                                <i class="fas fa-key mr-2"></i> Change Password
+                            </a>
+                        </div> -->
+
+                        <!-- Basic Information -->
+                        <div class="mb-8">
+                            <h2 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">Basic Information</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-sm">
+                                <div>
+                                    <p class="text-gray-500 mb-1">First Name</p>
+                                    <p class="font-medium text-gray-800"><%= user.firstName %></p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500 mb-1">Last Name</p>
+                                    <p class="font-medium text-gray-800"><%= user.lastName %></p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500 mb-1">Email</p>
+                                    <p class="font-medium text-gray-800"><%= user.email %></p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500 mb-1">Role</p>
+                                    <p class="font-medium text-gray-800 capitalize"><%= user.role %></p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500 mb-1">Phone Number</p>
+                                    <p class="font-medium text-gray-800"><%- user.phoneNumber || '<span class="text-gray-400 italic">Not provided</span>' %></p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500 mb-1">Last Login</p>
+                                    <p class="font-medium text-gray-800"><%= user.lastLogin ? new Date(user.lastLogin).toLocaleString() : 'Never' %></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Role-specific information -->
+                        <% if (roleData) { %>
+                            <div class="mb-8">
+                                <h2 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">
+                                    <%= user.role === 'student' ? 'Student Details' : (user.role === 'teacher' ? 'Teacher Details' : 'Details') %>
+                                </h2>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-sm">
+                                    <% if (user.role === 'student') { %>
+                                        <div>
+                                            <p class="text-gray-500 mb-1">Student ID</p>
+                                            <p class="font-medium text-gray-800"><%= roleData.studentId %></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-500 mb-1">Grade</p>
+                                            <p class="font-medium text-gray-800"><%- roleData.grade || '<span class="text-gray-400 italic">Not specified</span>' %></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-500 mb-1">Section</p>
+                                            <p class="font-medium text-gray-800"><%- roleData.section || '<span class="text-gray-400 italic">Not specified</span>' %></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-500 mb-1">Date of Birth</p>
+                                            <p class="font-medium text-gray-800"><%- roleData.dateOfBirth ? new Date(roleData.dateOfBirth).toLocaleDateString() : '<span class="text-gray-400 italic">Not provided</span>' %></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-500 mb-1">Address</p>
+                                            <p class="font-medium text-gray-800"><%- roleData.address || '<span class="text-gray-400 italic">Not provided</span>' %></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-500 mb-1">Enrollment Date</p>
+                                            <p class="font-medium text-gray-800"><%= roleData.enrollmentDate ? new Date(roleData.enrollmentDate).toLocaleDateString() : 'N/A' %></p>
+                                        </div>
+                                    <% } else if (user.role === 'teacher') { %>
+                                        <!-- Teacher specific fields -->
+                                        <div>
+                                            <p class="text-gray-500 mb-1">Teacher ID</p>
+                                            <p class="font-medium text-gray-800"><%= roleData.teacherId %></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-500 mb-1">Department</p>
+                                            <p class="font-medium text-gray-800"><%- roleData.department || '<span class="text-gray-400 italic">Not specified</span>' %></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-500 mb-1">Qualification</p>
+                                            <p class="font-medium text-gray-800"><%- roleData.qualification || '<span class="text-gray-400 italic">Not provided</span>' %></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-500 mb-1">Specialization</p>
+                                            <p class="font-medium text-gray-800"><%- roleData.specialization || '<span class="text-gray-400 italic">Not provided</span>' %></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-500 mb-1">Experience</p>
+                                            <p class="font-medium text-gray-800"><%- roleData.experience || '<span class="text-gray-400 italic">Not provided</span>' %></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-500 mb-1">Hire Date</p>
+                                            <p class="font-medium text-gray-800"><%= roleData.hireDate ? new Date(roleData.hireDate).toLocaleDateString() : 'N/A' %></p>
+                                        </div>
+                                        <% if (roleData.bio) { %>
+                                            <div class="md:col-span-2">
+                                                <p class="text-gray-500 mb-1">Bio</p>
+                                                <p class="font-medium text-gray-800"><%= roleData.bio %></p>
+                                            </div>
+                                        <% } %>
+                                    <% } %>
+                                </div>
+                            </div>
+                        <% } %>
+
+                        <!-- Parent/Guardian Information (Only for Students) -->
+                        <% if (user.role === 'student' && roleData) { %>
+                            <div class="mb-8">
+                                <h2 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">Parent/Guardian Information</h2>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-sm">
+                                    <div>
+                                        <p class="text-gray-500 mb-1">Parent/Guardian Name</p>
+                                        <p class="font-medium text-gray-800"><%- roleData.parentName || '<span class="text-gray-400 italic">Not provided</span>' %></p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-500 mb-1">Parent/Guardian Email</p>
+                                        <p class="font-medium text-gray-800"><%- roleData.parentEmail || '<span class="text-gray-400 italic">Not provided</span>' %></p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-500 mb-1">Parent/Guardian Phone</p>
+                                        <p class="font-medium text-gray-800"><%- roleData.parentPhone || '<span class="text-gray-400 italic">Not provided</span>' %></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
