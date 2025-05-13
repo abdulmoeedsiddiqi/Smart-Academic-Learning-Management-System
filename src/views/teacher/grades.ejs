@@ -1,0 +1,32 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navigation') %>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Grade Management</h2>
+            <% if (locals.flash && flash.error) { %>
+                <div class="alert alert-danger">
+                    <%= flash.error %>
+                </div>
+            <% } %>
+            <% if (locals.flash && flash.success) { %>
+                <div class="alert alert-success">
+                    <%= flash.success %>
+                </div>
+            <% } %>
+
+            <div class="row mb-3">
+                <div class="col">
+                    <a href="/teacher/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                Grade management features will be available soon.
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>
